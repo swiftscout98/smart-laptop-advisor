@@ -105,10 +105,10 @@ $page_title = "Advanced Reports";
                                         <div class="form-group">
                                             <label>&nbsp;</label>
                                             <div class="btn-group w-100">
-                                                <button type="button" class="btn btn-primary" onclick="generateReport()">
+                                                <button type="button" class="btn btn-primary" id="generateBtn">
                                                     <i class="bi bi-search"></i> Generate
                                                 </button>
-                                                <button type="button" class="btn btn-success" onclick="exportReport()">
+                                                <button type="button" class="btn btn-success" id="exportBtn">
                                                     <i class="bi bi-download"></i> Export CSV
                                                 </button>
                                             </div>
@@ -132,8 +132,8 @@ $page_title = "Advanced Reports";
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Total Orders</h6>
-                                        <h6 class="font-extrabold mb-0" id="summary-orders">-</h6>
+                                        <h6 class="text-muted font-semibold" id="card1-title">Total Orders</h6>
+                                        <h6 class="font-extrabold mb-0" id="card1-value">-</h6>
                                     </div>
                                 </div>
                             </div>
@@ -149,8 +149,8 @@ $page_title = "Advanced Reports";
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Total Revenue</h6>
-                                        <h6 class="font-extrabold mb-0" id="summary-revenue">-</h6>
+                                        <h6 class="text-muted font-semibold" id="card2-title">Total Revenue</h6>
+                                        <h6 class="font-extrabold mb-0" id="card2-value">-</h6>
                                     </div>
                                 </div>
                             </div>
@@ -166,8 +166,8 @@ $page_title = "Advanced Reports";
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">New Users</h6>
-                                        <h6 class="font-extrabold mb-0" id="summary-users">-</h6>
+                                        <h6 class="text-muted font-semibold" id="card3-title">New Users</h6>
+                                        <h6 class="font-extrabold mb-0" id="card3-value">-</h6>
                                     </div>
                                 </div>
                             </div>
@@ -192,12 +192,12 @@ $page_title = "Advanced Reports";
                     </div>
                 </div>
 
-                <!-- Charts and detailed views would go here -->
+                <!-- Charts and detailed views -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 id="chart-title">Sales & Revenue Analytics</h4>
+                                <h4 id="chart-title">Loading...</h4>
                             </div>
                             <div class="card-body">
                                 <div id="chart-sales-revenue"></div>
@@ -217,29 +217,18 @@ $page_title = "Advanced Reports";
     <script src="source/assets/vendors/apexcharts/apexcharts.js"></script>
 
     <script>
-        // Initialize Charts
-        var salesRevenueOptions = {
-            series: [],
-            chart: {
-                type: 'line',
-                height: 350,
-                zoom: { enabled: false }
-            },
-            dataLabels: { enabled: false },
-            stroke: { curve: 'smooth' },
-            xaxis: {
-                categories: [],
-                type: 'datetime'
-            },
-            tooltip: {
-                x: { format: 'dd MMM yyyy' }
-            },
-            noData: {
-                text: 'Loading...'
-            }
-        };
-        var salesRevenueChart = new ApexCharts(document.querySelector("#chart-sales-revenue"), salesRevenueOptions);
-        salesRevenueChart.render();
+        // Global chart variable
+        let salesRevenueChart = null;
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize event listeners
+            document.getElementById('generateBtn').addEventListener('click', generateReport);
+            document.getElementById('exportBtn').addEventListener('click', exportReport);
+            
+            // Load initial report
+            generateReport();
+        });
 
         function generateReport() {
             const reportType = document.getElementById('reportType').value;
@@ -247,7 +236,7 @@ $page_title = "Advanced Reports";
             const dateTo = document.getElementById('dateTo').value;
             
             // Show loading state
-            const btn = document.querySelector('button[onclick="generateReport()"]');
+            const btn = document.getElementById('generateBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...';
             btn.disabled = true;
@@ -256,18 +245,28 @@ $page_title = "Advanced Reports";
             const reportTypeText = document.getElementById('reportType').options[document.getElementById('reportType').selectedIndex].text;
             document.getElementById('chart-title').textContent = reportTypeText + ' Analytics';
 
+            // Fetch report data
             fetch(`ajax/report_handler.php?action=generate&reportType=${reportType}&dateFrom=${dateFrom}&dateTo=${dateTo}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         updateDashboard(data);
                     } else {
-                        alert('Error generating report: ' + (data.error || 'Unknown error'));
+                        throw new Error(data.error || 'Unknown error occurred');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while generating the report.');
+                    alert('An error occurred while generating the report: ' + error.message);
+                    
+                    // Show error in chart area
+                    const chartContainer = document.querySelector("#chart-sales-revenue");
+                    chartContainer.innerHTML = '<div class="alert alert-danger">Failed to load report data. Please try again.</div>';
                 })
                 .finally(() => {
                     btn.innerHTML = originalText;
@@ -276,48 +275,235 @@ $page_title = "Advanced Reports";
         }
 
         function updateDashboard(data) {
-            // Update Summary Cards
-            const cards = document.querySelectorAll('.card-body .row .col-md-8');
-            if (cards.length >= 3) {
-                // Card 1
-                cards[0].querySelector('h6.text-muted').textContent = data.summary.card1.title;
-                cards[0].querySelector('h6.font-extrabold').textContent = data.summary.card1.value;
-                
-                // Card 2
-                cards[1].querySelector('h6.text-muted').textContent = data.summary.card2.title;
-                cards[1].querySelector('h6.font-extrabold').textContent = data.summary.card2.value;
-                
-                // Card 3
-                cards[2].querySelector('h6.text-muted').textContent = data.summary.card3.title;
-                cards[2].querySelector('h6.font-extrabold').textContent = data.summary.card3.value;
-            }
-
-            // Determine chart type and axis type
-            let xaxisType = 'category';
-            if (data.chart.type === 'line' || data.chart.type === 'area') {
-                xaxisType = 'datetime';
-            }
-
-            // Update Chart
-            salesRevenueOptions = {
-                series: data.chart.series,
-                chart: {
-                    type: data.chart.type,
-                    height: 350
-                },
-                xaxis: {
-                    categories: data.chart.categories,
-                    type: xaxisType
-                },
-                labels: data.chart.type === 'donut' ? data.chart.categories : undefined
-            };
+            console.log('Updating dashboard with data:', data);
             
-            // Destroy and re-create to ensure clean state switching between types
-            if (salesRevenueChart) {
-                salesRevenueChart.destroy();
+            // Update Summary Cards using specific IDs
+            if (data.summary) {
+                document.getElementById('card1-title').textContent = data.summary.card1.title;
+                document.getElementById('card1-value').textContent = data.summary.card1.value;
+                
+                document.getElementById('card2-title').textContent = data.summary.card2.title;
+                document.getElementById('card2-value').textContent = data.summary.card2.value;
+                
+                document.getElementById('card3-title').textContent = data.summary.card3.title;
+                document.getElementById('card3-value').textContent = data.summary.card3.value;
             }
-            salesRevenueChart = new ApexCharts(document.querySelector("#chart-sales-revenue"), salesRevenueOptions);
-            salesRevenueChart.render();
+
+            // Validate chart data
+            if (!data.chart || !data.chart.type) {
+                console.error('Invalid chart data received');
+                return;
+            }
+
+            // Build chart options based on chart type
+            let newChartOptions = {};
+            
+            if (data.chart.type === 'donut' || data.chart.type === 'pie') {
+                // Donut/Pie chart configuration
+                newChartOptions = {
+                    series: data.chart.series || [],
+                    chart: {
+                        type: data.chart.type,
+                        height: 350,
+                        animations: {
+                            enabled: true,
+                            speed: 800
+                        }
+                    },
+                    labels: data.chart.categories || [],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return val.toFixed(1) + "%";
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        horizontalAlign: 'center'
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 300
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }],
+                    noData: {
+                        text: 'No Data Available',
+                        align: 'center',
+                        verticalAlign: 'middle'
+                    }
+                };
+            } else if (data.chart.type === 'bar') {
+                // Bar chart configuration
+                newChartOptions = {
+                    series: data.chart.series || [],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: false,
+                        toolbar: {
+                            show: true
+                        },
+                        animations: {
+                            enabled: true,
+                            speed: 800
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded',
+                            dataLabels: {
+                                position: 'top'
+                            }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    xaxis: {
+                        categories: data.chart.categories || [],
+                        type: 'category'
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Values'
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        horizontalAlign: 'left'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val;
+                            }
+                        }
+                    },
+                    noData: {
+                        text: 'No Data Available',
+                        align: 'center',
+                        verticalAlign: 'middle'
+                    }
+                };
+            } else {
+                // Line/Area chart configuration (default)
+                newChartOptions = {
+                    series: data.chart.series || [],
+                    chart: {
+                        type: data.chart.type || 'line',
+                        height: 350,
+                        zoom: { 
+                            enabled: true,
+                            type: 'x'
+                        },
+                        toolbar: {
+                            show: true
+                        },
+                        animations: {
+                            enabled: true,
+                            speed: 800
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    xaxis: {
+                        categories: data.chart.categories || [],
+                        type: 'datetime',
+                        labels: {
+                            datetimeUTC: false,
+                            format: 'dd MMM'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Values'
+                        },
+                        labels: {
+                            formatter: function (val) {
+                                return val.toFixed(0);
+                            }
+                        }
+                    },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy'
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        horizontalAlign: 'left'
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        row: {
+                            colors: ['#f3f3f3', 'transparent'],
+                            opacity: 0.5
+                        }
+                    },
+                    markers: {
+                        size: 4,
+                        hover: {
+                            size: 6
+                        }
+                    },
+                    noData: {
+                        text: 'No Data Available',
+                        align: 'center',
+                        verticalAlign: 'middle'
+                    }
+                };
+            }
+            
+            // Render chart
+            renderChart(newChartOptions);
+        }
+
+        function renderChart(options) {
+            try {
+                // Destroy existing chart if it exists
+                if (salesRevenueChart !== null) {
+                    salesRevenueChart.destroy();
+                    salesRevenueChart = null;
+                }
+                
+                // Clear the container
+                const chartContainer = document.querySelector("#chart-sales-revenue");
+                chartContainer.innerHTML = '';
+                
+                // Small delay to ensure DOM is ready for new chart
+                setTimeout(() => {
+                    try {
+                        salesRevenueChart = new ApexCharts(chartContainer, options);
+                        salesRevenueChart.render();
+                        console.log('Chart rendered successfully');
+                    } catch (renderError) {
+                        console.error("Chart rendering error:", renderError);
+                        chartContainer.innerHTML = 
+                            '<div class="alert alert-danger">Error rendering chart: ' + renderError.message + '</div>';
+                    }
+                }, 150);
+                
+            } catch (e) {
+                console.error("Chart preparation error:", e);
+                document.querySelector("#chart-sales-revenue").innerHTML = 
+                    '<div class="alert alert-danger">Error preparing chart: ' + e.message + '</div>';
+            }
         }
 
         function exportReport() {
@@ -325,18 +511,28 @@ $page_title = "Advanced Reports";
             const dateFrom = document.getElementById('dateFrom').value;
             const dateTo = document.getElementById('dateTo').value;
             
+            // Show loading state
+            const btn = document.getElementById('exportBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exporting...';
+            btn.disabled = true;
+            
+            // Redirect to export handler
             window.location.href = `ajax/report_handler.php?action=export&reportType=${reportType}&dateFrom=${dateFrom}&dateTo=${dateTo}`;
+            
+            // Reset button after a delay (since page might not actually redirect if there's an error)
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
         }
-
-        // Load initial data
-        document.addEventListener('DOMContentLoaded', function() {
-            generateReport();
-        });
     </script>
 </body>
 </html>
 
 <?php
 // Close database connection
-mysqli_close($conn);
+if (isset($conn)) {
+    mysqli_close($conn);
+}
 ?>

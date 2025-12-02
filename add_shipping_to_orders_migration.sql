@@ -20,3 +20,4 @@ WHERE TABLE_NAME = 'orders'
 AND TABLE_SCHEMA = 'laptop_advisor_db';
 
 
+

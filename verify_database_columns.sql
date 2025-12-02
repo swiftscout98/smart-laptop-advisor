@@ -23,3 +23,4 @@ AND TABLE_SCHEMA = 'laptop_advisor_db'
 AND COLUMN_NAME LIKE 'shipping%';
 
 
+
