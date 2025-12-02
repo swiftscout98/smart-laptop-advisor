@@ -8,69 +8,134 @@
 require_once 'includes/db_connect.php';
 
 // ============================================
+// ============================================
 // LOGIC SECTION - Data Fetching
 // ============================================
 
-// Fetch today's analytics
-$today_query = "SELECT * FROM chatbot_analytics 
-                WHERE date = CURDATE()";
-$today_result = $conn->query($today_query);
+// Set timezone to match database/user location (assuming +08:00 based on user context)
+date_default_timezone_set('Asia/Singapore');
+
+// Helper to get last 7 days dates
+$dates = [];
+for ($i = 6; $i >= 0; $i--) {
+    $dates[] = date('Y-m-d', strtotime("-$i days"));
+}
+
+// 1. Fetch Today's Analytics (Real-time)
+$today_stats_query = "SELECT 
+    COUNT(DISTINCT c.conversation_id) as total_conversations,
+    COUNT(cm.message_id) as total_messages,
+    AVG(cm.response_time_ms) as avg_response_time_ms,
+    (SELECT COUNT(*) FROM conversation_messages WHERE intent_detected IS NULL AND message_type = 'user' AND DATE(timestamp) = CURDATE()) as unrecognized_count,
+    (SELECT COUNT(*) FROM conversation_messages WHERE intent_detected = 'fallback' AND DATE(timestamp) = CURDATE()) as fallback_count,
+    (SELECT AVG(satisfaction_rating) FROM conversations WHERE satisfaction_rating IS NOT NULL AND DATE(started_at) = CURDATE()) as satisfaction_score
+FROM conversations c
+LEFT JOIN conversation_messages cm ON c.conversation_id = cm.conversation_id AND DATE(cm.timestamp) = CURDATE()
+WHERE DATE(c.started_at) = CURDATE()";
+
+$today_result = $conn->query($today_stats_query);
 $today_analytics = $today_result->fetch_assoc();
 
-// If no data for today, use latest available
-if (!$today_analytics) {
-    $today_query = "SELECT * FROM chatbot_analytics 
-                    ORDER BY date DESC LIMIT 1";
-    $today_result = $conn->query($today_query);
-    $today_analytics = $today_result->fetch_assoc();
+// Calculate Avg Messages Per Session
+$today_analytics['avg_messages_per_session'] = $today_analytics['total_conversations'] > 0 
+    ? $today_analytics['total_messages'] / $today_analytics['total_conversations'] 
+    : 0;
+
+// Calculate Intent Accuracy for Today
+$accuracy_query = "SELECT 
+    (SUM(CASE WHEN intent_confidence >= 0.7 THEN 1 ELSE 0 END) / COUNT(*)) * 100 as accuracy
+FROM conversation_messages 
+WHERE message_type = 'user' AND DATE(timestamp) = CURDATE() AND intent_detected IS NOT NULL";
+$accuracy_result = $conn->query($accuracy_query);
+$accuracy_data = $accuracy_result->fetch_assoc();
+$today_analytics['intent_accuracy'] = $accuracy_data['accuracy'] ?? 0;
+
+// Calculate Sentiment Distribution for Today
+$sentiment_query = "SELECT 
+    sentiment, 
+    COUNT(*) as count 
+FROM conversations 
+WHERE DATE(started_at) = CURDATE() 
+GROUP BY sentiment";
+$sentiment_result = $conn->query($sentiment_query);
+$sentiments = ['positive' => 0, 'neutral' => 0, 'negative' => 0];
+$total_sentiments = 0;
+while ($row = $sentiment_result->fetch_assoc()) {
+    $sent = strtolower($row['sentiment']);
+    if (isset($sentiments[$sent])) {
+        $sentiments[$sent] = $row['count'];
+        $total_sentiments += $row['count'];
+    }
 }
 
-// Fetch 7-day trend data
-$trend_query = "SELECT 
-    date,
-    total_conversations,
-    total_messages,
-    avg_messages_per_session,
-    avg_response_time_ms,
-    intent_accuracy,
-    resolution_rate,
-    satisfaction_score
-FROM chatbot_analytics 
-WHERE date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-ORDER BY date ASC";
-$trend_result = $conn->query($trend_query);
+$today_analytics['positive_sentiment_pct'] = $total_sentiments > 0 ? ($sentiments['positive'] / $total_sentiments) * 100 : 0;
+$today_analytics['neutral_sentiment_pct'] = $total_sentiments > 0 ? ($sentiments['neutral'] / $total_sentiments) * 100 : 0;
+$today_analytics['negative_sentiment_pct'] = $total_sentiments > 0 ? ($sentiments['negative'] / $total_sentiments) * 100 : 0;
+
+// Resolution Rate (Proxy: Conversations with 'recommendation_made' or 'order_placed' outcome)
+$resolution_query = "SELECT 
+    (SUM(CASE WHEN outcome IN ('recommendation_made', 'order_placed') THEN 1 ELSE 0 END) / COUNT(*)) * 100 as resolution_rate
+FROM conversations 
+WHERE DATE(started_at) = CURDATE()";
+$resolution_result = $conn->query($resolution_query);
+$resolution_data = $resolution_result->fetch_assoc();
+$today_analytics['resolution_rate'] = $resolution_data['resolution_rate'] ?? 0;
+
+// 2. Fetch 7-day trend data
 $trend_data = [];
-while ($row = $trend_result->fetch_assoc()) {
-    $trend_data[] = $row;
+foreach ($dates as $date) {
+    // Conversations & Satisfaction
+    $day_query = "SELECT 
+        COUNT(*) as total_conversations,
+        AVG(satisfaction_rating) as satisfaction_score
+    FROM conversations
+    WHERE DATE(started_at) = '$date'";
+    $day_result = $conn->query($day_query);
+    $day_data = $day_result->fetch_assoc();
+    
+    // Intent Accuracy
+    $acc_query = "SELECT 
+        (SUM(CASE WHEN intent_confidence >= 0.7 THEN 1 ELSE 0 END) / COUNT(*)) * 100 as accuracy
+    FROM conversation_messages
+    WHERE message_type = 'user' AND DATE(timestamp) = '$date' AND intent_detected IS NOT NULL";
+    $acc_result = $conn->query($acc_query);
+    $acc_data = $acc_result->fetch_assoc();
+    
+    $trend_data[] = [
+        'date' => $date,
+        'total_conversations' => $day_data['total_conversations'] ?? 0,
+        'satisfaction_score' => $day_data['satisfaction_score'] ?? 0,
+        'intent_accuracy' => $acc_data['accuracy'] ?? 0
+    ];
 }
 
-// Fetch top intents by usage
+// 3. Fetch Top Intents
 $top_intents_query = "SELECT 
-    i.intent_name,
-    i.display_name,
-    i.usage_count,
-    i.success_count,
-    CASE WHEN i.usage_count > 0 THEN (i.success_count / i.usage_count) * 100 ELSE 0 END as success_rate
-FROM intents i
-WHERE i.usage_count > 0
-ORDER BY i.usage_count DESC
+    intent_detected as intent_name,
+    COUNT(*) as usage_count,
+    AVG(intent_confidence) * 100 as success_rate
+FROM conversation_messages
+WHERE message_type = 'user' AND intent_detected IS NOT NULL
+GROUP BY intent_detected
+ORDER BY usage_count DESC
 LIMIT 10";
 $top_intents_result = $conn->query($top_intents_query);
 $top_intents = [];
 while ($row = $top_intents_result->fetch_assoc()) {
+    $row['display_name'] = ucwords(str_replace('_', ' ', $row['intent_name']));
     $top_intents[] = $row;
 }
 
-// Fetch recent unrecognized queries
+// 4. Fetch Recent Unrecognized Queries
 $unrecognized_query = "SELECT 
-    cm.message_content,
-    cm.timestamp,
+    message_content,
+    timestamp,
     COUNT(*) as occurrences
-FROM conversation_messages cm
-WHERE cm.message_type = 'user' 
-AND cm.intent_detected IS NULL
-AND cm.timestamp >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-GROUP BY cm.message_content
+FROM conversation_messages
+WHERE message_type = 'user' 
+AND intent_detected IS NULL
+AND timestamp >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+GROUP BY message_content
 ORDER BY occurrences DESC
 LIMIT 10";
 $unrecognized_result = $conn->query($unrecognized_query);

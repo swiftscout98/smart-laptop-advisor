@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2025 at 03:04 PM
+-- Generation Time: Dec 02, 2025 at 07:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -190,10 +190,11 @@ CREATE TABLE `ai_weightage` (
 INSERT INTO `ai_weightage` (`weightage_id`, `persona_id`, `cpu_weight`, `gpu_weight`, `battery_weight`, `display_weight`, `portability_weight`, `value_weight`, `total_weight`, `fairness_score`, `is_active`, `created_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 15.00, 10.00, 25.00, 15.00, 20.00, 15.00, 100.00, 85.50, 1, NULL, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
 (2, 2, 30.00, 15.00, 15.00, 15.00, 10.00, 15.00, 100.00, 82.00, 1, NULL, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
-(3, 3, 20.00, 35.00, 10.00, 20.00, 5.00, 10.00, 100.00, 78.50, 1, NULL, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
+(3, 3, 20.00, 35.00, 10.00, 20.00, 5.00, 10.00, 100.00, 78.50, 0, NULL, '2025-11-21 19:46:15', '2025-12-02 15:29:49'),
 (4, 4, 20.00, 40.00, 10.00, 15.00, 5.00, 10.00, 100.00, 75.00, 1, NULL, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
 (5, 5, 35.00, 15.00, 10.00, 15.00, 10.00, 15.00, 100.00, 80.00, 0, NULL, '2025-11-21 19:46:15', '2025-11-24 17:12:46'),
-(8, 5, 35.00, 15.00, 10.00, 15.00, 10.00, 15.00, 100.00, 56.67, 1, NULL, '2025-11-24 17:12:46', '2025-11-24 17:12:46');
+(8, 5, 35.00, 15.00, 10.00, 15.00, 10.00, 15.00, 100.00, 56.67, 1, NULL, '2025-11-24 17:12:46', '2025-11-24 17:12:46'),
+(9, 3, 16.67, 16.67, 16.67, 16.67, 16.67, 16.67, 100.00, 100.00, 1, NULL, '2025-12-02 15:29:49', '2025-12-02 15:29:49');
 
 -- --------------------------------------------------------
 
@@ -234,40 +235,6 @@ INSERT INTO `chatbot_analytics` (`analytics_id`, `date`, `total_conversations`, 
 (7, '2025-11-16', 149, 626, 4.20, 2270, 94.20, 92.30, 4.63, 69.50, 24.00, 6.50, 9, 5, '2025-11-21 19:57:10', '2025-11-21 19:57:10'),
 (8, '2025-11-24', 4, 36, 9.00, 10260, 0.00, 75.00, 0.00, 50.00, 50.00, 0.00, 36, 0, '2025-11-24 20:36:32', '2025-11-24 20:36:32'),
 (9, '2025-11-25', 8, 25, 3.10, 2325, 100.00, 37.50, 0.00, 0.00, 100.00, 0.00, 25, 0, '2025-11-24 20:36:48', '2025-11-24 20:36:48');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chatbot_models`
---
-
-CREATE TABLE `chatbot_models` (
-  `model_id` int(11) NOT NULL,
-  `session_id` varchar(50) NOT NULL,
-  `version` varchar(20) NOT NULL,
-  `started_at` datetime NOT NULL,
-  `completed_at` datetime DEFAULT NULL,
-  `duration_minutes` int(11) DEFAULT NULL,
-  `data_points_used` int(11) DEFAULT 0,
-  `accuracy` decimal(5,2) DEFAULT NULL COMMENT 'Model accuracy percentage',
-  `precision_score` decimal(5,2) DEFAULT NULL,
-  `recall_score` decimal(5,2) DEFAULT NULL,
-  `f1_score` decimal(5,2) DEFAULT NULL,
-  `status` enum('in_progress','completed','failed','deployed') DEFAULT 'in_progress',
-  `configuration` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'Training configuration parameters' CHECK (json_valid(`configuration`)),
-  `error_message` text DEFAULT NULL,
-  `is_deployed` tinyint(1) DEFAULT 0,
-  `deployed_at` datetime DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `chatbot_models`
---
-
-INSERT INTO `chatbot_models` (`model_id`, `session_id`, `version`, `started_at`, `completed_at`, `duration_minutes`, `data_points_used`, `accuracy`, `precision_score`, `recall_score`, `f1_score`, `status`, `configuration`, `error_message`, `is_deployed`, `deployed_at`, `created_at`, `updated_at`) VALUES
-(1, 'TR-2024-047', 'v2.4.1', '2025-11-22 01:57:10', '2025-11-22 03:42:10', 135, 2847, 94.20, 93.10, 91.80, 92.40, 'deployed', NULL, NULL, 1, '2025-11-22 03:47:10', '2025-11-21 19:57:10', '2025-11-21 19:57:10');
 
 -- --------------------------------------------------------
 
@@ -345,7 +312,90 @@ INSERT INTO `chat_history` (`chat_id`, `session_id`, `user_id`, `sender`, `messa
 (25, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'hellp', '2025-12-01 04:08:22'),
 (26, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'I\'m not sure how to answer that. You can ask me to \'recommend a laptop\' or ask about \'gaming\' or \'price\'. You can also ask to speak to a \'human agent\'.', '2025-12-01 04:08:22'),
 (27, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'sss', '2025-12-01 07:47:59'),
-(28, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'I\'m not sure how to answer that. You can ask me to \'recommend a laptop\' or ask about \'gaming\' or \'price\'. You can also ask to speak to a \'human agent\'.', '2025-12-01 07:47:59');
+(28, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'I\'m not sure how to answer that. You can ask me to \'recommend a laptop\' or ask about \'gaming\' or \'price\'. You can also ask to speak to a \'human agent\'.', '2025-12-01 07:47:59'),
+(29, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:50:59'),
+(30, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:50:59'),
+(31, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:51:07'),
+(32, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:51:07'),
+(33, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:51:55'),
+(34, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:51:55'),
+(35, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:51:59'),
+(36, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:51:59'),
+(37, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:52:07'),
+(38, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:52:07'),
+(39, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:52:37'),
+(40, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404', '2025-12-02 15:52:37'),
+(41, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:56:08'),
+(42, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 15:56:08'),
+(43, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'gpt-oss:20b', '2025-12-02 15:56:47'),
+(44, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 15:56:47'),
+(45, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'C:\\xampp\\htdocs\\fyp', '2025-12-02 15:56:49'),
+(46, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 15:56:49'),
+(47, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:56:52'),
+(48, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 15:56:52'),
+(49, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Hello, who are you?', '2025-12-02 15:57:02'),
+(50, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 15:57:02'),
+(51, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'helo', '2025-12-02 15:58:11'),
+(52, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 15:58:11'),
+(53, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'helo', '2025-12-02 15:58:32'),
+(54, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 15:58:32'),
+(55, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 's', '2025-12-02 15:58:43'),
+(56, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Connection error: Failed to connect to 127.0.0.1 port 11434 after 2022 ms: Couldn\'t connect to server', '2025-12-02 15:58:47'),
+(57, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 's', '2025-12-02 15:58:50'),
+(58, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 15:58:50'),
+(59, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 's', '2025-12-02 15:59:39'),
+(60, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 15:59:39'),
+(61, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'hello', '2025-12-02 16:01:10'),
+(62, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', '2025-12-02 16:01:10'),
+(63, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:01:27'),
+(64, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 16:01:27'),
+(65, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'hello', '2025-12-02 16:01:29'),
+(66, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', '2025-12-02 16:01:29'),
+(67, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:01:38'),
+(68, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:120b-cloud\' not found\"}', '2025-12-02 16:01:38'),
+(69, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:23:13'),
+(70, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:23:13'),
+(71, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:23:50'),
+(72, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:23:50'),
+(73, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:25'),
+(74, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:25'),
+(75, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:25'),
+(76, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:25'),
+(77, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:26'),
+(78, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:26'),
+(79, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:26'),
+(80, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:26'),
+(81, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:27'),
+(82, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:27'),
+(83, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:27'),
+(84, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:27'),
+(85, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:24:28'),
+(86, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Ollama API returned status code: 404 Body: {\"error\":\"model \'gpt-oss:20b-cloud\' not found\"}', '2025-12-02 16:24:28'),
+(87, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:29:58'),
+(88, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'hello', '2025-12-02 16:30:33'),
+(89, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'asd', '2025-12-02 16:30:35'),
+(90, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'hello', '2025-12-02 16:30:44'),
+(91, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', '2025-12-02 16:30:44'),
+(92, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:30:51'),
+(93, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Here’s a quick rundown of every laptop we currently have in stock:\n\n| # | Model | Brand | Price | Key Specs | Ideal For |\n|---|-------|-------|------|-----------|-----------|\n| 1 | IdeaPad Slim 3 | Lenovo | $649.00 | AMD Ryzen 5, Integrated Radeon, 8 GB RAM | Students |\n| 2 | HP Pavilion 15 | HP | $799.99 | Intel Core i5‑1235U, Iris Xe, 8 GB RAM | Students |\n| 3 | ASUS ROG Strix G15 | ASUS | $1,299.99 | AMD Ryzen 7 7735HS, NVIDIA RTX 4060, 16 GB RAM | Gaming |\n\nAll of them come with standard free shipping (when you spend over $1,000), a 30‑day return policy, and manufacturer warranties per brand. Let me know if you’d like more details on any of these or help placing an order!', '2025-12-02 16:30:58'),
+(94, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:31:13'),
+(95, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Sure! Here are the laptops we currently have in stock:\n\n| Laptop | Price | Key Specs | ideal for |\n|--------|-------|-----------|-----------|\n| **Lenovo IdeaPad Slim 3** | **$649.00** | AMD Ryzen 5 • Integrated Radeon graphics • 8 GB RAM | Students & everyday use |\n| **HP Pavilion 15** | **$799.99** | Intel Core i5‑1235U • Intel Iris Xe graphics • 8 GB RAM | Students & productivity |\n| **ASUS ROG Strix G15** | **$1,299.99** | AMD Ryzen 7 7735HS • NVIDIA RTX 4060 • 16 GB RAM | Gaming & high‑performance tasks |\n\nLet me know if you’d like more details about any model or help picking the right one for your needs!', '2025-12-02 16:31:20'),
+(96, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'who is xi jing ping', '2025-12-02 16:32:03'),
+(97, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'I\'m sorry, I can only help with laptops and store-related questions. How can I assist you today?', '2025-12-02 16:32:06'),
+(98, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop u store got?', '2025-12-02 16:35:31'),
+(99, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Here are the laptops we currently have in stock:\n\n- **Lenovo IdeaPad Slim 3** – $649  \n  *AMD Ryzen 5, integrated Radeon graphics, 8 GB RAM* – ideal for students and everyday use.\n\n- **HP Pavilion 15** – $799.99  \n  *Intel Core i5‑1235U, Intel Iris Xe graphics, 8 GB RAM* – a solid choice for students who need reliable performance.\n\n- **ASUS ROG Strix G15** – $1,299.99  \n  *AMD Ryzen 7 7735HS, NVIDIA RTX 4060, 16 GB RAM* – built for gaming and demanding creative work.', '2025-12-02 16:35:36'),
+(100, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'only 3 product only ?', '2025-12-02 16:35:49'),
+(101, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'We have a wide selection of laptops across many brands and price ranges—definitely more than three! To make it easy for you, I can highlight three top picks that match your needs and budget. \n\nJust let me know:\n\n1. Your primary use (gaming, video editing, business, school, etc.)  \n2. Your budget range  \n3. Any must‑have features (e.g., high‑refresh‑rate screen, dedicated GPU, extra storage)\n\nOnce I have those details, I’ll recommend three laptops that fit you perfectly. How can I help?', '2025-12-02 16:35:55'),
+(102, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'no need list out all the laptop u got', '2025-12-02 16:36:07'),
+(103, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Sure! I can suggest a laptop that fits your needs without showing the whole inventory.\n\nCould you let me know:\n\n1. Primary use (gaming, video editing, business, school, etc.)  \n2. Your budget range  \n3. Any must‑have features (screen size, touch, specific graphics card, storage type, etc.)\n\nThat way I can recommend the perfect model for you.', '2025-12-02 16:36:11'),
+(104, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'I want you list out all the laptop u understand?', '2025-12-02 16:36:31'),
+(105, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Here are the laptops we currently have in stock:\n\n- **IdeaPad Slim 3 (Lenovo) – $649**  \n  * AMD Ryzen 5 processor  \n  * Integrated Radeon graphics  \n  * 8 GB RAM – great for students and everyday tasks  \n\n- **HP Pavilion 15 (HP) – $799.99**  \n  * Intel Core i5‑1235U processor  \n  * Intel Iris Xe graphics  \n  * 8 GB RAM – a solid choice for students who need a bit more performance  \n\n- **ASUS ROG Strix G15 (ASUS) – $1,299.99**  \n  * AMD Ryzen 7 7735HS processor  \n  * NVIDIA RTX 4060 graphics  \n  * 16 GB RAM – built for gaming and demanding creative work  \n\nLet me know if you’d like more details or help picking the right one for your needs!', '2025-12-02 16:36:35'),
+(106, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop', '2025-12-02 16:39:25'),
+(107, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Sure! Here’s the full lineup of laptops we currently have in stock:\n\n| Laptop | Brand | Price | Key Specs | Ideal For |\n|--------|-------|-------|-----------|-----------|\n| **IdeaPad Slim 3** | Lenovo | **$649.00** | AMD Ryzen 5, Integrated Radeon graphics, 8 GB RAM | Students & everyday use |\n| **HP Pavilion 15** | HP | **$799.99** | Intel Core i5‑1235U, Intel Iris Xe graphics, 8 GB RAM | Students & productivity |\n| **ASUS ROG Strix G15** | ASUS | **$1,299.99** | AMD Ryzen 7 7735HS, NVIDIA RTX 4060, 16 GB RAM | Gaming & high‑performance tasks |\n\nLet me know if you’d like more details on any model or help choosing the right one for you!', '2025-12-02 16:39:29'),
+(108, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'can u list out all the laptop', '2025-12-02 16:42:35'),
+(109, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', 'Sure! Here’s the full lineup of laptops we currently have in stock:\n\n| Laptop (Model) | Brand | Price | Key Specs | Ideal For |\n|---|---|---|---|---|\n| IdeaPad Slim 3 | Lenovo | $649.00 | AMD Ryzen 5, Integrated Radeon graphics, 8 GB RAM | Students & everyday use |\n| HP Pavilion 15 | HP | $799.99 | Intel Core i5‑1235U, Intel Iris Xe graphics, 8 GB RAM | Students & productivity |\n| ASUS ROG Strix G15 | ASUS | $1,299.99 | AMD Ryzen 7 7735HS, NVIDIA RTX 4060, 16 GB RAM | Gaming & high‑performance tasks |\n\nLet me know if you’d like more details on any of these or help picking the right one for you!', '2025-12-02 16:42:39'),
+(110, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'user', 'Suggest a laptop for gaming under $2000', '2025-12-02 16:47:58'),
+(111, 'aqon9fqa1i1mqr08al51mrhb8g', 4, 'bot', '| # | Laptop | Price | Key Specs | Why it\'s a fit |\n|---|---|---|---|---|\n| 1 | ASUS ROG Strix G15 (Ryzen 7) | $1,299.99 | • AMD Ryzen 7 7735HS<br>• NVIDIA GeForce RTX 4060<br>• 16 GB DDR5 RAM<br>• 512 GB SSD | • Excellent 1080p/1440p gaming performance<br>• Strong GPU for current titles under $2000<br>• Good balance of speed and battery life |\n| 2 | ASUS ROG Strix G15 (Ryzen 9) | $1,899.99 | • AMD Ryzen 9 ## (high‑end)<br>• NVIDIA GeForce RTX 3070<br>• 16 GB DDR5 RAM<br>• 1 TB SSD | • Higher‑tier GPU for ultra‑high settings and ray tracing<br>• Future‑proof performance for demanding games<br>• Large storage for game libraries |\n\n**Quick recommendation**  \nIf you want solid performance at a great price, the **ASUS ROG Strix G15 with Ryzen 7 and RTX 4060** is the best choice. It delivers excellent gaming FPS at 1080p–1440p while staying well below $2000. If you need the extra power for ultra‑high settings or future‑proofing, the **Ryzen 9/RTX 3070** model is a strong upgrade still within your budget.', '2025-12-02 16:48:04');
 
 -- --------------------------------------------------------
 
@@ -395,7 +445,14 @@ INSERT INTO `conversations` (`conversation_id`, `session_id`, `user_id`, `user_i
 (12, 'chat_6924bb29e7372_0520256d7ce96511', 4, '::1', 'web', '2025-11-25 04:08:09', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-11-24 20:08:09', '2025-11-24 20:08:09'),
 (13, 'chat_6924c27e74666_17c0aa3fa3f9c363', 4, '::1', 'web', '2025-11-25 04:39:26', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-11-24 20:39:26', '2025-11-24 20:39:26'),
 (14, 'chat_6924c284b74a2_fbae83c1311c5114', 4, '::1', 'web', '2025-11-25 04:39:32', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-11-24 20:39:32', '2025-11-24 20:39:32'),
-(15, 'chat_6925b55550d67_e15a3a14847bc756', 4, '::1', 'web', '2025-11-25 21:55:33', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-11-25 13:55:33', '2025-11-25 13:55:33');
+(15, 'chat_6925b55550d67_e15a3a14847bc756', 4, '::1', 'web', '2025-11-25 21:55:33', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-11-25 13:55:33', '2025-11-25 13:55:33'),
+(16, 'chat_692503d67f3ee_8976cb809c25c205', 4, '::1', 'web', '2025-12-03 01:17:05', NULL, 0, 5, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 17:17:05', '2025-12-02 17:22:52'),
+(17, 'chat_692f2577101a7_2c1b26ab3b30cf65', 4, '::1', 'web', '2025-12-03 01:44:23', NULL, 0, 6, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 17:44:23', '2025-12-02 17:49:29'),
+(18, 'chat_692f26c7c010e_68233206bf39a780', 4, '::1', 'web', '2025-12-03 01:49:59', NULL, 1644, 5, 0, 0, 'neutral', 0.00, 'general_chat', NULL, NULL, 0, NULL, '2025-12-02 17:49:59', '2025-12-02 18:17:27'),
+(19, 'chat_692f2d6a5ee15_9aa9efb95330a180', 4, '::1', 'web', '2025-12-03 02:18:18', NULL, 0, 1, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 18:18:18', '2025-12-02 18:18:18'),
+(20, 'chat_692f2d8300e24_829515c16c98da82', 4, '::1', 'web', '2025-12-03 02:18:43', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 18:18:43', '2025-12-02 18:18:43'),
+(21, 'chat_692f2da269488_9a26044b586d4b06', 4, '::1', 'web', '2025-12-03 02:19:14', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 18:19:14', '2025-12-02 18:19:14'),
+(22, 'chat_692f2dddeef23_deaaa511d61f5e9b', 4, '::1', 'web', '2025-12-03 02:20:13', NULL, 0, 0, 0, 0, 'neutral', 0.00, NULL, NULL, NULL, 0, NULL, '2025-12-02 18:20:13', '2025-12-02 18:20:13');
 
 -- --------------------------------------------------------
 
@@ -544,7 +601,46 @@ INSERT INTO `conversation_messages` (`message_id`, `conversation_id`, `message_t
 (121, 7, 'user', 'Hello', NULL, NULL, NULL, '2025-11-25 04:09:29', NULL, '2025-11-24 20:09:29'),
 (122, 7, 'bot', 'Hello! 👋 How can I help you with your laptop needs today?', NULL, NULL, NULL, '2025-11-25 04:09:30', 1227, '2025-11-24 20:09:30'),
 (123, 15, 'user', 'hello', NULL, NULL, NULL, '2025-11-25 21:55:35', NULL, '2025-11-25 13:55:35'),
-(124, 15, 'bot', 'Hello! 👋 How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-11-25 21:55:36', 1079, '2025-11-25 13:55:36');
+(124, 15, 'bot', 'Hello! 👋 How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-11-25 21:55:36', 1079, '2025-11-25 13:55:36'),
+(125, 16, 'user', 'hello', NULL, NULL, NULL, '2025-12-03 01:17:05', NULL, '2025-12-02 17:17:05'),
+(126, 16, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-12-03 01:17:05', NULL, '2025-12-02 17:17:05'),
+(127, 16, 'user', 'list out all the laptop', NULL, NULL, NULL, '2025-12-03 01:17:13', NULL, '2025-12-02 17:17:13'),
+(128, 16, 'bot', 'Here are all the laptops we currently have in stock:\n\n| # | Laptop | Price | Key Specs | Why it\'s a fit |\n|---|---|---|---|---|\n| 1 | IdeaPad Slim 3 (Lenovo) | $649.00 | • AMD Ryzen 5<br>• Integrated Radeon graphics<br>• 8 GB RAM | • Ideal for students on a budget<br>• Good all‑day battery life for classes<br>• Lightweight and portable |\n| 2 | HP Pavilion 15 (HP) | $799.99 | • Intel Core i5‑1235U<br>• Intel Iris Xe graphics<br>• 8 GB RAM | • Strong performance for coursework and light multitasking<br>• 15‑inch display balances productivity and portability<br>• Slightly higher specs than the IdeaPad for a modest price increase |\n| 3 | ASUS ROG Strix G15 (ASUS) | $1,299.99 | • AMD Ryzen 7 7735HS<br>• NVIDIA RTX 4060<br>• 16 GB RAM | • Powerhouse for gaming and demanding creative work<br>• High‑refresh-rate display for smooth gameplay<br>• Robust cooling system for sustained performance |\n\n**Quick recommendation**  \n- If you need a solid, budget‑friendly laptop for school work, the **IdeaPad Slim 3** offers great value.  \n- For a bit more power without breaking the bank, the **HP Pavilion 15** is a balanced choice.  \n- If gaming or heavy multimedia tasks are a priority, the **ASUS ROG Strix G15** is the clear winner.  ', NULL, NULL, NULL, '2025-12-03 01:17:22', NULL, '2025-12-02 17:17:22'),
+(129, 16, 'user', 'got macbook pro 16?', NULL, NULL, NULL, '2025-12-03 01:19:42', NULL, '2025-12-02 17:19:42'),
+(130, 16, 'bot', 'Sure! We have the **MacBook Pro 16** in stock.\n\n| # | Laptop | Price | Key Specs | Why it\'s a fit |\n|---|---|---|---|---|\n| 1 | **MacBook Pro 16** (Apple) | $3499.00 | • Apple M2 Pro CPU<br>• Integrated GPU<br>• 16 GB RAM<br>• 16‑inch Retina display | • Powerful M2 Pro chip handles intensive creative workloads (video editing, 3D rendering)<br>• High‑resolution Retina screen gives accurate colors for design work |\n\n**Quick recommendation**  \nIf you need top‑tier performance for creative tasks, the MacBook Pro 16 is the ideal choice—with a strong M2 Pro processor, ample RAM, and a brilliant display, it’s built for professionals who demand the best. Let me know if you’d like to add it to your cart or have any questions about shipping, warranty, or payment!', NULL, NULL, NULL, '2025-12-03 01:19:47', NULL, '2025-12-02 17:19:47'),
+(131, 16, 'user', 'got SteelSeries Arctis 7?', NULL, NULL, NULL, '2025-12-03 01:20:19', NULL, '2025-12-02 17:20:19'),
+(132, 16, 'bot', 'I\'m sorry, I can only help with laptops and store‑related questions. How can I assist you today?', NULL, NULL, NULL, '2025-12-03 01:20:25', NULL, '2025-12-02 17:20:25'),
+(133, 16, 'user', 'got Razer BlackWidow V3?', NULL, NULL, NULL, '2025-12-03 01:21:47', NULL, '2025-12-02 17:21:47'),
+(134, 16, 'bot', 'I\'m sorry, I can only help with laptops and store-related questions. How can I assist you today?', NULL, NULL, NULL, '2025-12-03 01:21:53', NULL, '2025-12-02 17:21:53'),
+(135, 16, 'user', 'what mouse did u recommend to me?', NULL, NULL, NULL, '2025-12-03 01:22:52', NULL, '2025-12-02 17:22:52'),
+(136, 16, 'bot', 'I\'m sorry, I can only help with laptops and store-related questions. How can I assist you today?', NULL, NULL, NULL, '2025-12-03 01:22:56', NULL, '2025-12-02 17:22:56'),
+(137, 17, 'user', 'hello', NULL, NULL, NULL, '2025-12-03 01:44:26', NULL, '2025-12-02 17:44:26'),
+(138, 17, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-12-03 01:44:26', NULL, '2025-12-02 17:44:26'),
+(139, 17, 'user', 'yo', NULL, NULL, NULL, '2025-12-03 01:44:34', NULL, '2025-12-02 17:44:34'),
+(140, 17, 'bot', 'I\'m sorry, I can only help with laptops and store-related questions. How can I assist you today?', NULL, NULL, NULL, '2025-12-03 01:44:37', NULL, '2025-12-02 17:44:37'),
+(141, 17, 'user', 'greeting', NULL, NULL, NULL, '2025-12-03 01:44:49', NULL, '2025-12-02 17:44:49'),
+(142, 17, 'bot', 'Hello! 👋 I\'m the Smart Laptop Advisor. How can I assist you with laptops or any store‑related questions today?', NULL, NULL, NULL, '2025-12-03 01:44:52', NULL, '2025-12-02 17:44:52'),
+(143, 17, 'user', 'warranty info', NULL, NULL, NULL, '2025-12-03 01:45:09', NULL, '2025-12-02 17:45:09'),
+(144, 17, 'bot', '**Warranty Overview**\n\n- **All laptops** come with the manufacturer’s warranty.  \n  - Most brands offer **1‑year** coverage, while some (e.g., high‑end workstations) provide **up to 2 years**.  \n- The warranty covers **hardware defects** and includes repair or replacement at authorized service centers.  \n- **Accidental damage** (drops, spills, etc.) is **not** covered under the standard warranty; you can purchase an optional extended protection plan for added peace of mind.\n\n**What’s Included**\n\n| Coverage | Typical Duration | What’s Covered |\n|---|---|---|\n| **Standard Manufacturer Warranty** | 1‑2 years (brand‑specific) | • Defective parts<br>• Labor for repairs<br>• Free replacement if unrepairable |\n| **Optional Extended Protection** | Up to 3 years | • Same as standard + accidental damage protection (subject to plan terms) |\n\n**How to Use Your Warranty**\n\n1. **Contact Support** – Email [support@smartlaptopadvisor.com](mailto:support@smartlaptopadvisor.com) or reply here with your order number.  \n2. **Provide Details** – Model, issue description, and proof of purchase.  \n3. **Follow Instructions** – We’ll guide you to the nearest authorized service center or arrange a return for repair/replacement.\n\nIf you have any specific laptop in mind, I can also share its exact warranty length. Let me know how I can help!', NULL, NULL, NULL, '2025-12-03 01:45:22', NULL, '2025-12-02 17:45:22'),
+(145, 17, 'user', 'good good tq for the info', NULL, NULL, NULL, '2025-12-03 01:47:53', NULL, '2025-12-02 17:47:53'),
+(146, 17, 'bot', 'You’re welcome! 😊 If you have any questions about laptops, specifications, store policies, or need help choosing the right device, just let me know. I’m here to help!', NULL, NULL, NULL, '2025-12-03 01:47:56', NULL, '2025-12-02 17:47:56'),
+(147, 17, 'user', 'my rog strix scar 16 got problem how do i claim warranty can u provide the instruction?', NULL, NULL, NULL, '2025-12-03 01:49:29', NULL, '2025-12-02 17:49:29');
+INSERT INTO `conversation_messages` (`message_id`, `conversation_id`, `message_type`, `message_content`, `intent_detected`, `intent_confidence`, `entities_extracted`, `timestamp`, `response_time_ms`, `created_at`) VALUES
+(148, 17, 'bot', 'Sure! Here’s how you can claim the warranty for your ASUS ROG Strix Scar 16 through Smart Laptop Advisor:\n\n### Warranty Claim Steps\n1. **Locate Your Purchase Info**  \n   - Find the order confirmation email or receipt (order #, purchase date, and price).  \n   - Make sure the laptop is still within the manufacturer’s warranty period (usually 1 year for ASUS; check the exact dates on your receipt).\n\n2. **Prepare the Laptop**  \n   - Back up any personal data – warranty service may require a system restore.  \n   - Keep the original box, accessories, and any included documentation handy.\n\n3. **Contact Our Support Team**  \n   - **Email:** support@smartlaptopadvisor.com  \n   - **Subject line:** “Warranty Claim – [Your Order #] – ROG Strix Scar 16”  \n   - Include a brief description of the issue, photos/videos (if helpful), and attach a scan of the receipt.\n\n4. **Receive a Return Authorization (RMA)**  \n   - Our team will reply with an RMA number and a prepaid shipping label (if applicable).  \n   - Print the label and securely pack the laptop with the original box and accessories.\n\n5. **Ship the Laptop**  \n   - Drop the package at any UPS/USPS location (the label includes tracking).  \n   - Keep the tracking number for reference.\n\n6. **Repair / Replacement**  \n   - Once we receive the laptop, the manufacturer will diagnose the problem.  \n   - If it’s covered under warranty, they’ll repair it or provide a replacement at no cost to you.\n\n7. **Return Shipping**  \n   - After repair/replacement, we’ll ship the laptop back to you using our standard shipping (free for orders over $1000, otherwise standard rates apply).  \n\n### Quick Tips\n- **Act promptly** – processing starts once we receive the laptop.  \n- **Do not uninstall** any hardware components or open the chassis; this could void the warranty.  \n- **Keep all correspondence** in case you need to follow up.\n\nIf you have any trouble generating the RMA or need further help, just let me know! I\'m here to make the process smooth for you.', NULL, NULL, NULL, '2025-12-03 01:49:40', NULL, '2025-12-02 17:49:40'),
+(149, 18, 'user', 'hi', NULL, NULL, NULL, '2025-12-03 02:11:26', NULL, '2025-12-02 18:11:26'),
+(150, 18, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-12-03 02:11:26', NULL, '2025-12-02 18:11:26'),
+(151, 18, 'user', 'recommend laptop for me', NULL, NULL, NULL, '2025-12-03 02:11:39', NULL, '2025-12-02 18:11:39'),
+(152, 18, 'bot', 'Here are three great options from our current inventory that cover a range of needs and budgets:\n\n| # | Laptop | Price | Key Specs | Why it\'s a fit |\n|---|---|---|---|---|\n| 1 | IdeaPad Slim 3 (Lenovo) | $649.00 | • AMD Ryzen 5<br>• Integrated Radeon graphics<br>• 8 GB RAM | • Lightweight and affordable – perfect for students or everyday tasks<br>• Long battery life for on‑the‑go use |\n| 2 | HP Pavilion 15 (HP) | $799.99 | • Intel Core i5‑1235U<br>• Intel Iris Xe graphics<br>• 8 GB RAM | • Strong performance for classwork, streaming, and light creative work<br>• Slightly larger screen and premium build for a modest price |\n| 3 | ASUS ROG Strix G15 (ASUS) | $1,299.99 | • AMD Ryzen 7 7735HS<br>• NVIDIA RTX 4060<br>• 16 GB RAM | • High‑end gaming and content‑creation machine<br>• Dedicated GPU for smooth gaming at 1080p+ and fast video rendering |\n\n**Quick recommendation**  \nIf you need a budget‑friendly laptop for school or everyday use, the **IdeaPad Slim 3** is the best value. For a bit more power and a premium feel, the **HP Pavilion 15** balances performance and price. If gaming or intensive creative work is a priority, the **ASUS ROG Strix G15** delivers the performance you need.  \n\nLet me know if you have a specific budget or primary use case, and I can narrow it down further!', NULL, NULL, NULL, '2025-12-03 02:11:46', NULL, '2025-12-02 18:11:46'),
+(153, 18, 'user', 'hi', NULL, NULL, NULL, '2025-12-03 02:11:55', NULL, '2025-12-02 18:11:55'),
+(154, 18, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-12-03 02:11:55', NULL, '2025-12-02 18:11:55'),
+(155, 18, 'user', 'GOOD NIGHT', NULL, NULL, NULL, '2025-12-03 02:12:55', NULL, '2025-12-02 18:12:55'),
+(156, 18, 'bot', 'I\'m sorry, I can only help with laptops and store-related questions. How can I assist you today?', NULL, NULL, NULL, '2025-12-03 02:12:57', NULL, '2025-12-02 18:12:57'),
+(157, 18, 'user', 'start chat', NULL, NULL, NULL, '2025-12-03 02:17:23', NULL, '2025-12-02 18:17:23'),
+(158, 18, 'bot', 'Hello! 👋 I\'m your Smart Laptop Advisor. I can help you find the perfect laptop, answer questions about specs, shipping, returns, warranties, and guide you through the ordering process.\n\nWhat can I assist you with today?', NULL, NULL, NULL, '2025-12-03 02:17:27', NULL, '2025-12-02 18:17:27'),
+(159, 19, 'user', 'hi', NULL, NULL, NULL, '2025-12-03 02:18:18', NULL, '2025-12-02 18:18:18'),
+(160, 19, 'bot', 'Hello! I\'m your Smart Laptop Advisor. How can I help you find the perfect laptop today?', NULL, NULL, NULL, '2025-12-03 02:18:18', NULL, '2025-12-02 18:18:18'),
+(161, 22, 'user', 'hi', NULL, NULL, NULL, '2025-12-03 02:20:13', NULL, '2025-12-02 18:20:13'),
+(162, 22, 'bot', 'Hello! 👋 I\'m your Smart Laptop Advisor. How can I help you today with laptops, specs, store policies, shipping, returns, or ordering?', NULL, NULL, NULL, '2025-12-03 02:20:15', 1647, '2025-12-02 18:20:15');
 
 -- --------------------------------------------------------
 
@@ -597,7 +693,7 @@ CREATE TABLE `intents` (
 --
 
 INSERT INTO `intents` (`intent_id`, `intent_name`, `display_name`, `description`, `category`, `is_active`, `priority`, `confidence_threshold`, `usage_count`, `success_count`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'greeting', 'Greetings & Welcome', 'User greets the chatbot or starts a conversation', 'greeting', 1, 100, 0.750, 7, 7, '2025-11-25 21:55:36', '2025-11-21 19:57:10', '2025-11-25 13:55:36'),
+(1, 'greeting', 'Greetings & Welcome', 'User greets the chatbot or starts a conversation', 'greeting', 1, 100, 0.750, 8, 8, '2025-12-03 02:20:15', '2025-11-21 19:57:10', '2025-12-02 18:20:15'),
 (2, 'find_laptop', 'Laptop Search Requests', 'User wants to find or search for a laptop', 'product_inquiry', 1, 90, 0.750, 1, 1, '2025-11-25 04:06:52', '2025-11-21 19:57:10', '2025-11-24 20:06:52'),
 (3, 'gaming_laptop', 'Gaming Laptop Requests', 'User is looking for a gaming laptop', 'recommendation', 1, 85, 0.750, 0, 0, NULL, '2025-11-21 19:57:10', '2025-11-21 19:57:10'),
 (4, 'budget_question', 'Budget Related Queries', 'User specifies their budget or price range', 'support', 1, 80, 0.750, 0, 0, NULL, '2025-11-21 19:57:10', '2025-11-21 19:57:10'),
@@ -700,7 +796,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `total_amount`, `order_status`, `sh
 (8, 1, 2898.00, 'Pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-27 19:42:34', 'Credit Card', 0),
 (9, 2, 649.00, 'Pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-28 06:09:52', 'Credit Card', 0),
 (10, 1, 649.00, 'Shipped', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-28 07:23:33', 'Credit Card', 0),
-(24, 4, 900.00, 'Pending', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-12-01 15:59:29', 'Credit Card', 0);
+(24, 4, 900.00, 'Completed', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-12-01 15:59:29', 'Credit Card', 0),
+(25, 4, 5000.00, 'Shipped', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-12-02 15:22:42', 'Credit Card', 0);
 
 -- --------------------------------------------------------
 
@@ -733,7 +830,8 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`
 (10, 8, 6, 1, 1450.00),
 (11, 9, 4, 1, 649.00),
 (12, 10, 4, 1, 649.00),
-(28, 24, 117, 3, 300.00);
+(28, 24, 117, 3, 300.00),
+(29, 25, 128, 1, 5000.00);
 
 -- --------------------------------------------------------
 
@@ -843,9 +941,7 @@ INSERT INTO `personas` (`persona_id`, `name`, `short_description`, `detailed_des
 (2, 'Professional', 'Business & productivity', 'Targets working professionals who need reliable, efficient laptops for office work, meetings, and multitasking.', 'bi bi-briefcase', 'success', 'CPU Performance,RAM Capacity,Keyboard Quality', 1, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
 (3, 'Creative', 'Designers & content creators', 'Aimed at graphic designers, video editors, and content creators who need powerful hardware for creative work.', 'bi bi-palette', 'warning', 'GPU Performance,Display Quality,Color Accuracy', 1, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
 (4, 'Gamer', 'Gaming enthusiasts', 'Designed for gaming enthusiasts who prioritize high-performance graphics and smooth gameplay.', 'bi bi-controller', 'danger', 'GPU Performance,Refresh Rate,Cooling System', 1, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
-(5, 'Developer', 'Software engineers', 'Caters to software developers who need fast compilation, multiple VMs, and coding efficiency.', 'bi bi-laptop', 'info', 'CPU Performance,RAM Capacity,SSD Speed', 1, '2025-11-21 19:46:15', '2025-11-21 19:46:15'),
-(7, 'gay', 'sadads', 'asdads', 'bi bi-mortarboard', 'primary', 'cpu_performance,gpu_performance', 1, '2025-11-21 19:51:21', '2025-11-21 19:51:21'),
-(8, 'Library Database Management System', 'sadads', '', 'bi bi-mortarboard', 'primary', '', 1, '2025-11-24 17:13:02', '2025-11-24 17:13:02');
+(5, 'Developer', 'Software engineers', 'Caters to software developers who need fast compilation, multiple VMs, and coding efficiency.', 'bi bi-laptop', 'info', 'CPU Performance,RAM Capacity,SSD Speed', 1, '2025-11-21 19:46:15', '2025-11-21 19:46:15');
 
 -- --------------------------------------------------------
 
@@ -893,7 +989,8 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_category`, `relat
 (121, 'Lenovo ThinkPad X1', 'laptop', NULL, 'Lenovo', 1399.99, 20, 10, 'Intel Core i5-1340P', 'Intel Iris Xe', 16, 512, 'SSD', 14.00, NULL, 'Business ultrabook with legendary keyboard and security features', 'Business'),
 (122, 'HP Pavilion 15', 'laptop', NULL, 'HP', 799.99, 50, 10, 'Intel Core i5-1235U', 'Intel Iris Xe', 8, 512, 'SSD', 15.60, NULL, 'Affordable laptop perfect for students and everyday computing', 'Student'),
 (124, 'Razer BlackWidow V3', 'keyboard', 'Gaming', 'Razer', 139.99, 50, 10, '', '', 0, 0, '', 0.00, NULL, 'Mechanical gaming keyboard with Razer Green switches and RGB', 'Gaming'),
-(125, 'SteelSeries Arctis 7', 'headset', 'Gaming', 'SteelSeries', 149.99, 50, 10, '', '', 0, 0, '', 0.00, NULL, 'Wireless gaming headset with lossless audio and 24-hour battery', 'Gaming');
+(125, 'SteelSeries Arctis 7', 'headset', 'Gaming', 'SteelSeries', 149.99, 50, 10, '', '', 0, 0, '', 0.00, NULL, 'Wireless gaming headset with lossless audio and 24-hour battery', 'Gaming'),
+(128, 'Asus ROG Strix G16', 'laptop', NULL, 'Asus', 5000.00, 49, 10, ' i7-13650HX', 'NVIDIA GeForce RTX 4060', 32, 1024, 'SSD', 15.60, 'LaptopAdvisor/images/product_692f0409da2d4.webp', 'Power Power Up Your Gaming – Windows 11, 13th Gen Intel Core i7-13650HX Processor And NVIDIA GeForce RTX 4060 Laptop GPU, Up To 140W TGP To Win More Games\r\n\r\n', 'Gaming');
 
 -- --------------------------------------------------------
 
@@ -922,7 +1019,11 @@ INSERT INTO `product_media` (`media_id`, `product_id`, `media_url`, `media_type`
 (17, 117, 'LaptopAdvisor/images/product_117_692d9b1207ba7.webp', 'image', 5, '2025-12-01 13:41:38'),
 (18, 117, 'http://youtu.be/EcGoLXoYMqI?si=ejbqoRmpLp4KWm0n', 'video', 6, '2025-12-01 13:41:38'),
 (26, 8, 'LaptopAdvisor/images/product_8_692eee1113b23.webp', 'image', 1, '2025-12-02 13:48:01'),
-(27, 8, 'LaptopAdvisor/images/product_8_692eee1114424.webp', 'image', 2, '2025-12-02 13:48:01');
+(27, 8, 'LaptopAdvisor/images/product_8_692eee1114424.webp', 'image', 2, '2025-12-02 13:48:01'),
+(28, 128, 'LaptopAdvisor/images/product_128_692f0409dae41.webp', 'image', 1, '2025-12-02 15:21:45'),
+(29, 128, 'LaptopAdvisor/images/product_128_692f0409db6b7.webp', 'image', 2, '2025-12-02 15:21:45'),
+(30, 128, 'LaptopAdvisor/images/product_128_692f0409dbdfa.webp', 'image', 3, '2025-12-02 15:21:45'),
+(31, 128, 'LaptopAdvisor/images/product_128_692f0409dc4f1.webp', 'image', 4, '2025-12-02 15:21:45');
 
 -- --------------------------------------------------------
 
@@ -990,7 +1091,11 @@ INSERT INTO `recommendation_ratings` (`rating_id`, `user_id`, `product_id`, `rat
 (1, 1, 4, -1, '2025-09-27 19:56:58'),
 (4, 1, 2, 1, '2025-09-27 19:57:13'),
 (5, 1, 6, 1, '2025-09-27 20:02:40'),
-(6, 2, 4, 1, '2025-09-28 06:10:39');
+(6, 2, 4, 1, '2025-09-28 06:10:39'),
+(9, 4, 4, 1, '2025-12-02 15:06:53'),
+(10, 4, 122, -1, '2025-12-02 15:33:32'),
+(12, 4, 6, 1, '2025-12-02 15:36:21'),
+(13, 4, 118, 1, '2025-12-02 15:36:29');
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1445,7 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password_hash`, `status`,
 (1, 'Heng', 'chansh-am22@student.tarc.edu.my', '$2y$10$3Sm1lxjx6YodMxqCXW0riOY6Plen2z.pV.GXvYL.KH3a.3dmFPRMy', 'pending', 'uploads/68d83a959bb49-Screenshot 2024-05-03 151943.png', 'Business', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-27 17:21:42'),
 (2, 'xuan', 'chan123@GMAIL.COM', '$2y$10$UqWAFCaxniqS5NKJDYgndOWtGvfVlv3rwWfdJVo.f0mbUMkYPmY16', 'pending', 'uploads/default.png', 'Student', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-28 06:08:01'),
 (3, 'xuan', 'abc@gmail.com', '$2y$10$WbU7EDXaKg0EcfW.B.spWOqvSqrLro1z9NCpw9DW.Z8xMhe04PRMm', 'pending', 'uploads/default.png', 'Student', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 14:17:17'),
-(4, 'GYZ ♡ TZE', 'GYZLOVETZE@gmail.com', '$2y$10$b2eGc843Cu2g7Q0AyP4w1ulwZTmgomHrPv4QpFC9XtHSOAhlCOrqa', 'active', 'uploads/6920af2dc9395-donk.jpg', 'General Use', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-11-21 18:27:28'),
+(4, 'GYZ', 'GYZ@gmail.com', '$2y$10$b2eGc843Cu2g7Q0AyP4w1ulwZTmgomHrPv4QpFC9XtHSOAhlCOrqa', 'active', 'uploads/6920af2dc9395-donk.jpg', 'Business', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-11-21 18:27:28'),
 (6, 'cck', 'chock-am22@student.tarc.edu.my', '$2y$10$VzgL/FZDSCQeqhGiGgtxae3fX9.z/4QLAIlDDDmk.GhqSNczOI0tm', 'pending', 'uploads/default.png', 'General Use', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-12-02 07:00:41');
 
 -- --------------------------------------------------------
@@ -1417,16 +1522,6 @@ ALTER TABLE `chatbot_analytics`
   ADD PRIMARY KEY (`analytics_id`),
   ADD UNIQUE KEY `unique_date` (`date`),
   ADD KEY `idx_date` (`date`);
-
---
--- Indexes for table `chatbot_models`
---
-ALTER TABLE `chatbot_models`
-  ADD PRIMARY KEY (`model_id`),
-  ADD UNIQUE KEY `session_id` (`session_id`),
-  ADD KEY `idx_session` (`session_id`),
-  ADD KEY `idx_status` (`status`),
-  ADD KEY `idx_deployed` (`is_deployed`);
 
 --
 -- Indexes for table `chatbot_training_data`
@@ -1673,19 +1768,13 @@ ALTER TABLE `ai_performance_metrics`
 -- AUTO_INCREMENT for table `ai_weightage`
 --
 ALTER TABLE `ai_weightage`
-  MODIFY `weightage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `weightage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `chatbot_analytics`
 --
 ALTER TABLE `chatbot_analytics`
   MODIFY `analytics_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `chatbot_models`
---
-ALTER TABLE `chatbot_models`
-  MODIFY `model_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `chatbot_training_data`
@@ -1697,19 +1786,19 @@ ALTER TABLE `chatbot_training_data`
 -- AUTO_INCREMENT for table `chat_history`
 --
 ALTER TABLE `chat_history`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `conversation_messages`
 --
 ALTER TABLE `conversation_messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -1739,13 +1828,13 @@ ALTER TABLE `inventory_logs`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `password_reset_tokens`
@@ -1769,13 +1858,13 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `product_media`
 --
 ALTER TABLE `product_media`
-  MODIFY `media_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `media_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `product_reviews`
@@ -1793,7 +1882,7 @@ ALTER TABLE `recommendation_logs`
 -- AUTO_INCREMENT for table `recommendation_ratings`
 --
 ALTER TABLE `recommendation_ratings`
-  MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `roles`

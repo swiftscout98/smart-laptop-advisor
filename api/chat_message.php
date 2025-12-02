@@ -129,6 +129,7 @@ try {
     $stmt = $conn->prepare("INSERT INTO conversation_messages (conversation_id, message_type, message_content, timestamp) VALUES (?, 'user', ?, NOW())");
     $stmt->bind_param("is", $conversationId, $userMessage);
     $stmt->execute();
+    $userMessageId = $stmt->insert_id; // Capture ID for intent tracking
     $stmt->close();
     
     // ========================================
@@ -176,7 +177,7 @@ try {
     // INTENT USAGE TRACKING
     // Track which intents were used in this response
     // ========================================
-    trackIntentByResponse($conn, $botMessage);
+    trackIntentByResponse($conn, $botMessage, $userMessageId);
 
     // Return success response to frontend
     echo json_encode([
@@ -349,9 +350,9 @@ function fetchRelevantProducts($conn, $userMessage) {
  * Detects which intent was used based on bot response content
  * Updates usage statistics automatically
  */
-function trackIntentByResponse($conn, $botResponse) {
+function trackIntentByResponse($conn, $botResponse, $userMessageId) {
     // Get all active intents with their default responses
-    $query = "SELECT i.intent_id, ir.response_text 
+    $query = "SELECT i.intent_id, i.intent_name, ir.response_text 
               FROM intents i
               JOIN intent_responses ir ON i.intent_id = ir.intent_id
               WHERE i.is_active = 1 AND ir.is_default = 1";
@@ -380,6 +381,17 @@ function trackIntentByResponse($conn, $botResponse) {
             $stmt->bind_param("i", $row['intent_id']);
             $stmt->execute();
             $stmt->close();
+
+            // Update conversation message with detected intent and confidence
+            $confidence = $similarity / 100;
+            $stmt = $conn->prepare("UPDATE conversation_messages 
+                                    SET intent_detected = ?, 
+                                        intent_confidence = ? 
+                                    WHERE message_id = ?");
+            $stmt->bind_param("sdi", $row['intent_name'], $confidence, $userMessageId);
+            $stmt->execute();
+            $stmt->close();
+
             break; // Only track one intent per response
         }
     }
