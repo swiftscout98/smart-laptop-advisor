@@ -175,9 +175,11 @@ try {
     
     // ========================================
     // INTENT USAGE TRACKING
-    // Track which intents were used in this response
+    // Track which intents were used based on USER INPUT
     // ========================================
-    trackIntentByResponse($conn, $botMessage, $userMessageId);
+    error_log("Calling trackIntentByInput for message: $userMessage");
+    trackIntentByInput($conn, $userMessage, $userMessageId);
+    error_log("Finished trackIntentByInput");
 
     // Return success response to frontend
     echo json_encode([
@@ -369,53 +371,83 @@ function fetchRelevantProducts($conn, $userMessage) {
 
 /**
  * Intent Tracking Function
- * Detects which intent was used based on bot response content
+ * Detects which intent was used based on USER INPUT matching Training Phrases
  * Updates usage statistics automatically
  */
-function trackIntentByResponse($conn, $botResponse, $userMessageId) {
-    // Get all active intents with their default responses
-    $query = "SELECT i.intent_id, i.intent_name, ir.response_text 
-              FROM intents i
-              JOIN intent_responses ir ON i.intent_id = ir.intent_id
-              WHERE i.is_active = 1 AND ir.is_default = 1";
+function trackIntentByInput($conn, $userInput, $userMessageId) {
+    error_log("trackIntentByInput started for: $userInput");
+    // Get all active intents with their training phrases
+    $query = "SELECT t.phrase_text, i.intent_id, i.intent_name 
+              FROM training_phrases t 
+              JOIN intents i ON t.intent_id = i.intent_id 
+              WHERE i.is_active = 1";
     
     $result = $conn->query($query);
     
     if (!$result) {
+        error_log("trackIntentByInput query failed: " . $conn->error);
         return; // Query failed, skip tracking
     }
     
+    $bestMatchIntentId = null;
+    $bestMatchIntentName = null;
+    $highestSimilarity = 0;
+
     while ($row = $result->fetch_assoc()) {
-        $defaultResponse = $row['response_text'];
-        $similarity = 0;
+        $phrase = $row['phrase_text'];
         
-        // Check if bot response contains parts of the default response
-        similar_text($defaultResponse, $botResponse, $similarity);
-        
-        // If at least 30% similarity, consider this intent as triggered
-        if ($similarity > 30) {
-            // Intent was used! Update statistics
-            $stmt = $conn->prepare("UPDATE intents 
-                                    SET usage_count = usage_count + 1,
-                                        success_count = success_count + 1,
-                                        last_used_at = NOW()
-                                    WHERE intent_id = ?");
-            $stmt->bind_param("i", $row['intent_id']);
-            $stmt->execute();
-            $stmt->close();
-
-            // Update conversation message with detected intent and confidence
-            $confidence = $similarity / 100;
-            $stmt = $conn->prepare("UPDATE conversation_messages 
-                                    SET intent_detected = ?, 
-                                        intent_confidence = ? 
-                                    WHERE message_id = ?");
-            $stmt->bind_param("sdi", $row['intent_name'], $confidence, $userMessageId);
-            $stmt->execute();
-            $stmt->close();
-
-            break; // Only track one intent per response
+        // 1. Check for direct containment (stripos) - Strongest Match
+        if (stripos($userInput, $phrase) !== false) {
+            $bestMatchIntentId = $row['intent_id'];
+            $bestMatchIntentName = $row['intent_name'];
+            $highestSimilarity = 100;
+            error_log("Exact match found: $phrase (Intent: $bestMatchIntentName)");
+            break; // Stop immediately on exact phrase match
         }
+        
+        // 2. Check similarity
+        similar_text(strtolower($userInput), strtolower($phrase), $percent);
+        if ($percent > $highestSimilarity) {
+            $highestSimilarity = $percent;
+            $bestMatchIntentId = $row['intent_id'];
+            $bestMatchIntentName = $row['intent_name'];
+        }
+    }
+
+    error_log("Best match: " . ($bestMatchIntentName ?? 'None') . " ($highestSimilarity%)");
+
+    // Threshold for fuzzy match (e.g., > 60% similarity)
+    if ($bestMatchIntentId && $highestSimilarity > 60) {
+        // Intent was used! Update statistics
+        $stmt = $conn->prepare("UPDATE intents 
+                                SET usage_count = usage_count + 1,
+                                    success_count = success_count + 1,
+                                    last_used_at = NOW()
+                                WHERE intent_id = ?");
+        $stmt->bind_param("i", $bestMatchIntentId);
+        $stmt->execute();
+        $stmt->close();
+        error_log("Updated usage count for Intent ID: $bestMatchIntentId");
+
+        // Update conversation message with detected intent and confidence
+        $confidence = $highestSimilarity / 100;
+        $stmt = $conn->prepare("UPDATE conversation_messages 
+                                SET intent_detected = ?, 
+                                    intent_confidence = ? 
+                                WHERE message_id = ?");
+        $stmt->bind_param("sdi", $bestMatchIntentName, $confidence, $userMessageId);
+        $stmt->execute();
+        $stmt->close();
+    } else {
+        error_log("No intent matched above threshold.");
+        // No intent detected (Unrecognized)
+        $stmt = $conn->prepare("UPDATE conversation_messages 
+                                SET intent_detected = NULL, 
+                                    intent_confidence = 0 
+                                WHERE message_id = ?");
+        $stmt->bind_param("i", $userMessageId);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 ?>
