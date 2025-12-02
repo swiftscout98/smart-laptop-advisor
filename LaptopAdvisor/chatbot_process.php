@@ -78,7 +78,7 @@ function handle_send_message($input) {
         $conversation_id = $row['conversation_id'];
         
         // Update conversation stats
-        $stmt = $conn->prepare("UPDATE conversations SET updated_at = NOW(), message_count = message_count + 1 WHERE conversation_id = ?");
+        $stmt = $conn->prepare("UPDATE conversations SET updated_at = NOW(), duration_seconds = TIMESTAMPDIFF(SECOND, started_at, NOW()), message_count = message_count + 1 WHERE conversation_id = ?");
         $stmt->bind_param("i", $conversation_id);
         $stmt->execute();
     }

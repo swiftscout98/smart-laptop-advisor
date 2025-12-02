@@ -112,26 +112,8 @@
         historyLoaded = false;
 
         displayMessage("Chat session ended.", 'system');
-        
-        // Add Restart Button
-        const restartBtn = document.createElement('div');
-        restartBtn.className = 'text-center mt-3';
-        restartBtn.innerHTML = '<button onclick="restartChat()" class="btn btn-sm btn-primary" style="background: #435ebe; border: none; padding: 5px 15px; border-radius: 20px; color: white; cursor: pointer;">Start New Chat</button>';
-        chatBody.appendChild(restartBtn);
-        chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    window.restartChat = async function() {
-        clearChatBody();
-        await startNewSession();
-        if (sessionId) {
-            displayMessage("Hello! I'm your Smart Laptop Advisor. How can I help you find the perfect laptop today?", 'bot');
-            historyLoaded = true;
-        } else {
-            displayMessage('Failed to start new session. Please try again.', 'system');
-        }
-    };
-    
     // Toggle maximize state
     function toggleMaximize() {
         chatWidget.classList.toggle('maximized');
