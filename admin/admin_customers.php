@@ -359,8 +359,22 @@ while ($row = mysqli_fetch_assoc($customers_result)) {
                                                     </td>
                                                     <td>
                                                         <div class="d-flex align-items-center">
-                                                            <?php if (!empty($customer['profile_picture']) && file_exists('../' . $customer['profile_picture'])): ?>
-                                                                <img src="../<?php echo htmlspecialchars($customer['profile_picture']); ?>" 
+                                                            <?php 
+                                                            $avatar_src = '';
+                                                            if (!empty($customer['profile_picture'])) {
+                                                                $avatar_path = '../LaptopAdvisor/uploads/' . $customer['profile_picture'];
+                                                                if (file_exists($avatar_path)) {
+                                                                    $avatar_src = $avatar_path;
+                                                                } else {
+                                                                    $avatar_path = '../LaptopAdvisor/' . $customer['profile_picture'];
+                                                                    if (file_exists($avatar_path)) {
+                                                                        $avatar_src = $avatar_path;
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            if (!empty($avatar_src)): ?>
+                                                                <img src="<?php echo htmlspecialchars($avatar_src); ?>" 
                                                                      alt="Avatar" class="customer-avatar me-2">
                                                             <?php else: ?>
                                                                 <div class="avatar avatar-md me-2 bg-light text-primary d-flex align-items-center justify-content-center rounded-circle" style="width: 40px; height: 40px;">
