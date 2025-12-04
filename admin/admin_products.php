@@ -840,11 +840,15 @@ $page_title = "Product Management";
                                                 <?php 
                                                 $image_src = 'source/assets/images/samples/placeholder.png'; // Default fallback
                                                 if (!empty($product['image_url'])) {
-                                                    // Handle both absolute and relative paths
-                                                    if (strpos($product['image_url'], 'LaptopAdvisor/') === 0) {
-                                                        $image_src = '../' . $product['image_url'];
+                                                    $img_url = $product['image_url'];
+                                                    if (strpos($img_url, 'http') === 0) {
+                                                        $image_src = $img_url;
+                                                    } elseif (strpos($img_url, 'LaptopAdvisor/') === 0) {
+                                                        $image_src = '../' . $img_url;
+                                                    } elseif (strpos($img_url, 'images/') === 0) {
+                                                        $image_src = '../LaptopAdvisor/' . $img_url;
                                                     } else {
-                                                        $image_src = $product['image_url'];
+                                                        $image_src = '../LaptopAdvisor/images/' . basename($img_url);
                                                     }
                                                 }
                                                 ?>
@@ -1075,8 +1079,14 @@ $page_title = "Product Management";
                     
                     if (product.image_url) {
                         let imgSrc = product.image_url;
-                        if (imgSrc.startsWith("LaptopAdvisor/")) {
+                        if (imgSrc.startsWith("http")) {
+                            // Keep as is
+                        } else if (imgSrc.startsWith("LaptopAdvisor/")) {
                             imgSrc = "../" + imgSrc;
+                        } else if (imgSrc.startsWith("images/")) {
+                            imgSrc = "../LaptopAdvisor/" + imgSrc;
+                        } else {
+                            imgSrc = "../LaptopAdvisor/images/" + imgSrc;
                         }
                         if (imagePreview) {
                             imagePreview.src = imgSrc;
@@ -1111,7 +1121,15 @@ $page_title = "Product Management";
                                 let imagesHtml = '<label class="form-label d-block mt-2">Existing Additional Images:</label><div class="d-flex flex-wrap gap-3 mb-3">';
                                 images.forEach(img => {
                                     let url = img.media_url;
-                                    if (!url.startsWith('http') && !url.startsWith('../')) url = '../' + url;
+                                    if (url.startsWith('http')) {
+                                        // Keep as is
+                                    } else if (url.startsWith('LaptopAdvisor/')) {
+                                        url = '../' + url;
+                                    } else if (url.startsWith('images/')) {
+                                        url = '../LaptopAdvisor/' + url;
+                                    } else if (!url.startsWith('../')) {
+                                        url = '../LaptopAdvisor/images/' + url;
+                                    }
                                     
                                     imagesHtml += `
                                         <div class="position-relative" id="media-${img.media_id}" style="width: 100px; height: 100px;">
