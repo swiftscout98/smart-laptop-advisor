@@ -188,6 +188,22 @@ $page_title = "Advanced Reports";
                         </div>
                     </div>
                 </div>
+
+                <!-- Analysis Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Key Insights & Analysis</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="analysis-container">
+                                    <p class="text-muted">Select a report type and click Generate to see insights.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <?php include 'includes/admin_footer.php'; ?>
@@ -195,8 +211,8 @@ $page_title = "Advanced Reports";
     </div>
 
     <!-- JavaScript -->
-    <script src="source/assets/js/bootstrap.js"></script>
-    <script src="source/assets/js/app.js"></script>
+    <script src="source/assets/js/bootstrap.min.js"></script>
+    <script src="source/assets/js/main.js"></script>
     <script src="source/assets/vendors/apexcharts/apexcharts.js"></script>
     <!-- jsPDF for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -272,6 +288,14 @@ $page_title = "Advanced Reports";
                 
                 document.getElementById('card3-title').textContent = data.summary.card3.title;
                 document.getElementById('card3-value').textContent = data.summary.card3.value;
+            }
+
+            // Update Analysis
+            const analysisContainer = document.getElementById('analysis-container');
+            if (data.analysis) {
+                analysisContainer.innerHTML = data.analysis;
+            } else {
+                analysisContainer.innerHTML = '<p class="text-muted">No analysis available for this report.</p>';
             }
 
             // Validate chart data
