@@ -67,11 +67,20 @@ $dist_query = "SELECT
 $dist_result = mysqli_query($conn, $dist_query);
 
 $dist_labels = [];
+$dist_labels = [];
 $dist_values = [];
+$dist_colors = [];
 
 while ($row = mysqli_fetch_assoc($dist_result)) {
     $dist_labels[] = $row['rating_type'];
     $dist_values[] = $row['count'];
+    
+    // Assign color based on type
+    if (strpos($row['rating_type'], 'Likes') !== false) {
+        $dist_colors[] = '#10b981'; // Green for Likes
+    } else {
+        $dist_colors[] = '#ef4444'; // Red for Dislikes
+    }
 }
 
 // Fetch Top Rated Products
@@ -444,10 +453,7 @@ $top_products_result = mysqli_query($conn, $top_products_query);
             labels: <?php echo json_encode($dist_labels); ?>,
             datasets: [{
                 data: <?php echo json_encode($dist_values); ?>,
-                backgroundColor: [
-                    '#10b981', // Likes - Emerald
-                    '#ef4444'  // Dislikes - Red
-                ],
+                backgroundColor: <?php echo json_encode($dist_colors); ?>,
                 borderWidth: 0,
                 hoverOffset: 4
             }]
