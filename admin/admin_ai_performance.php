@@ -44,51 +44,8 @@ if ($persona_perf_result) {
     }
 }
 
-// Generate Insights
-$insights = [];
+// Insights generation moved to frontend (AI-powered)
 
-// 1. Top Performing Persona
-if (!empty($persona_data)) {
-    // Already sorted by total_ratings DESC in query, let's find highest satisfaction
-    $top_persona = null;
-    $highest_score = -1;
-    
-    foreach ($persona_data as $p) {
-        if ($p['satisfaction_score'] > $highest_score && $p['total_ratings'] > 0) {
-            $highest_score = $p['satisfaction_score'];
-            $top_persona = $p;
-        }
-    }
-    
-    if ($top_persona) {
-        $insights[] = [
-            'type' => 'success',
-            'icon' => 'bi-trophy-fill',
-            'title' => 'Top Performer',
-            'text' => "<strong>{$top_persona['persona_name']}</strong> users have the highest satisfaction rate at <strong>" . round($top_persona['satisfaction_score']) . "%</strong>."
-        ];
-    }
-
-    // 2. Needs Attention (Lowest Satisfaction > 0 ratings)
-    $low_persona = null;
-    $lowest_score = 101;
-    
-    foreach ($persona_data as $p) {
-        if ($p['satisfaction_score'] < $lowest_score && $p['total_ratings'] > 0) {
-            $lowest_score = $p['satisfaction_score'];
-            $low_persona = $p;
-        }
-    }
-    
-    if ($low_persona && $low_persona !== $top_persona && $low_persona['satisfaction_score'] < 70) {
-        $insights[] = [
-            'type' => 'warning',
-            'icon' => 'bi-exclamation-triangle-fill',
-            'title' => 'Needs Attention',
-            'text' => "<strong>{$low_persona['persona_name']}</strong> users report lower satisfaction (<strong>" . round($low_persona['satisfaction_score']) . "%</strong>). Consider reviewing recommendations for this group."
-        ];
-    }
-}
 
 // Fetch performance trends (last 7 days)
 $trends_query = "SELECT 
@@ -271,35 +228,27 @@ $top_products_result = mysqli_query($conn, $top_products_query);
         </div>
     </div>
 
-    <!-- Key Insights & Recommendations -->
-    <?php if (!empty($insights)): ?>
+    <!-- Key Insights & Recommendations (AI Powered) -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4><i class="bi bi-lightbulb-fill text-warning me-2"></i>Key Insights & Recommendations</h4>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4><i class="bi bi-lightbulb-fill text-warning me-2"></i>Key Insights & Recommendations <span class="badge bg-light-primary text-primary ms-2" style="font-size: 0.7em;">AI Powered</span></h4>
+                    <button class="btn btn-sm btn-outline-primary" onclick="fetchAiInsights()" id="refreshInsightsBtn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <?php foreach ($insights as $insight): ?>
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex align-items-start p-3 border rounded">
-                                <div class="me-3">
-                                    <i class="bi <?php echo $insight['icon']; ?> fs-3 text-<?php echo $insight['type']; ?>"></i>
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-1 text-<?php echo $insight['type']; ?>"><?php echo $insight['title']; ?></h6>
-                                    <p class="mb-0 text-muted small"><?php echo $insight['text']; ?></p>
-                                </div>
+                    <div id="ai-insights-container" class="row">
+                        <div class="col-12 text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
                             </div>
+                            <p class="mt-2 text-muted">Analyzing performance data...</p>
                         </div>
-                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php endif; ?>
 
     <!-- Performance Trends Chart -->
     <div class="row mb-4">
@@ -438,6 +387,82 @@ $top_products_result = mysqli_query($conn, $top_products_query);
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Prepare data for AI
+    const performanceStats = {
+        satisfaction_score: <?php echo round($satisfaction_score, 1); ?>,
+        total_feedback: <?php echo $kpis['total_ratings']; ?>,
+        likes: <?php echo $kpis['total_likes']; ?>,
+        dislikes: <?php echo $kpis['total_dislikes']; ?>,
+        personas: <?php echo json_encode($persona_data); ?>
+    };
+
+    // Auto-fetch insights on load
+    document.addEventListener('DOMContentLoaded', function() {
+        if(performanceStats.total_feedback > 0) {
+            fetchAiInsights();
+        } else {
+            document.getElementById('ai-insights-container').innerHTML = 
+                '<div class="col-12 text-center text-muted p-4">Not enough data to generate insights yet.</div>';
+        }
+    });
+
+    function fetchAiInsights() {
+        const container = document.getElementById('ai-insights-container');
+        const btn = document.getElementById('refreshInsightsBtn');
+        
+        // Show loading
+        container.innerHTML = `
+            <div class="col-12 text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Analyzing performance data...</p>
+            </div>
+        `;
+        btn.disabled = true;
+
+        fetch('ajax/generate_performance_insights.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: performanceStats })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success && result.insights) {
+                let html = '';
+                result.insights.forEach(insight => {
+                    html += `
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start p-3 border rounded">
+                                <div class="me-3">
+                                    <i class="bi ${insight.icon} fs-3 text-${insight.type}"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1 text-${insight.type}">${insight.title}</h6>
+                                    <p class="mb-0 text-muted small">${insight.text}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } else {
+                throw new Error(result.error || 'Failed to generate insights');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            container.innerHTML = `
+                <div class="col-12 text-center text-danger p-3">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    AI Insights Unavailable: ${error.message}
+                </div>
+            `;
+        })
+        .finally(() => {
+            btn.disabled = false;
+        });
+    }
+</script>
 <script>
     // Common Chart Options
     Chart.defaults.font.family = "'Nunito', sans-serif";
