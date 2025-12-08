@@ -413,7 +413,7 @@ if __name__ == "__main__":
         
         # Test recommendations
         print("\nTesting recommendations for user_id=1...")
-        recommendations = engine.get_hybrid_recommendations(user_id=1, use_case='Gaming', n=5)
+        recommendations = engine.get_hybrid_recommendations(user_id=1, use_case='Gamer', n=5)
         
         print(f"\nFound {len(recommendations)} recommendations:")
         for i, rec in enumerate(recommendations, 1):

@@ -124,27 +124,25 @@ if (isset($_POST['add_product'])) {
         $file = $_FILES['product_image'];
         
         // Validate file type (MIME type check)
-        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime_type = finfo_file($finfo, $file['tmp_name']);
         finfo_close($finfo);
         
         if (!in_array($mime_type, $allowed_types)) {
-            $error_message = "Invalid image type. Only JPG, PNG, and WEBP are allowed.";
+            $error_message = "Invalid image type. Only JPG, PNG, WEBP, and AVIF are allowed.";
         } else {
             // Validate file size (5MB maximum)
             $max_size = 5 * 1024 * 1024; // 5MB in bytes
             if ($file['size'] > $max_size) {
                 $error_message = "Image file size exceeds 5MB limit. Your file is " . round($file['size'] / 1024 / 1024, 2) . "MB";
             } else {
-                // Validate image dimensions (min 400x300)
+                // Validate image dimensions (min 400x300) - RESTRICTION REMOVED
                 $image_info = getimagesize($file['tmp_name']);
                 if ($image_info !== false) {
-                    $width = $image_info[0];
-                    $height = $image_info[1];
-                    
-                    if ($width < 400 || $height < 300) {
-                        $error_message = "Image dimensions too small. Minimum 400x300 pixels required. Your image is {$width}x{$height}";
+                    // Restriction removed per user request
+                    if (false) { 
+                        $error_message = "Image dimensions too small...";
                     } else {
                         // Use LaptopAdvisor/images directory
                         $upload_dir = '../LaptopAdvisor/images/';
@@ -157,7 +155,8 @@ if (isset($_POST['add_product'])) {
                             'image/jpeg' => 'jpg',
                             'image/jpg' => 'jpg',
                             'image/png' => 'png',
-                            'image/webp' => 'webp'
+                            'image/webp' => 'webp',
+                            'image/avif' => 'avif'
                         ];
                         $safe_extension = $extension_map[$mime_type];
                         $new_filename = uniqid('product_') . '.' . $safe_extension;
@@ -197,12 +196,13 @@ if (isset($_POST['add_product'])) {
                         $mime_type = finfo_file($finfo, $tmp_name);
                         finfo_close($finfo);
                         
-                        if (in_array($mime_type, ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])) {
+                        if (in_array($mime_type, ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'])) {
                             $extension_map = [
                                 'image/jpeg' => 'jpg',
                                 'image/jpg' => 'jpg',
                                 'image/png' => 'png',
-                                'image/webp' => 'webp'
+                                'image/webp' => 'webp',
+                                'image/avif' => 'avif'
                             ];
                             $safe_extension = $extension_map[$mime_type];
                             $new_filename = uniqid('product_' . $new_product_id . '_') . '.' . $safe_extension;
@@ -276,27 +276,25 @@ if (isset($_POST['edit_product'])) {
         $file = $_FILES['product_image'];
         
         // Validate file type (MIME type check)
-        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime_type = finfo_file($finfo, $file['tmp_name']);
         finfo_close($finfo);
         
         if (!in_array($mime_type, $allowed_types)) {
-            $error_message = "Invalid image type. Only JPG, PNG, and WEBP are allowed.";
+            $error_message = "Invalid image type. Only JPG, PNG, WEBP, and AVIF are allowed.";
         } else {
             // Validate file size (5MB maximum)
             $max_size = 5 * 1024 * 1024;
             if ($file['size'] > $max_size) {
                 $error_message = "Image file size exceeds 5MB limit.";
             } else {
-                // Validate image dimensions
+                // Validate image dimensions - RESTRICTION REMOVED
                 $image_info = getimagesize($file['tmp_name']);
                 if ($image_info !== false) {
-                    $width = $image_info[0];
-                    $height = $image_info[1];
-                    
-                    if ($width < 400 || $height < 300) {
-                        $error_message = "Image dimensions too small. Minimum 400x300 pixels required.";
+                    // Restriction removed per user request
+                    if (false) {
+                        $error_message = "Image dimensions too small...";
                     } else {
                         // Upload new image
                         $upload_dir = '../LaptopAdvisor/images/';
@@ -308,7 +306,8 @@ if (isset($_POST['edit_product'])) {
                             'image/jpeg' => 'jpg',
                             'image/jpg' => 'jpg',
                             'image/png' => 'png',
-                            'image/webp' => 'webp'
+                            'image/webp' => 'webp',
+                            'image/avif' => 'avif'
                         ];
                         $safe_extension = $extension_map[$mime_type];
                         $new_filename = uniqid('product_') . '.' . $safe_extension;
@@ -389,8 +388,8 @@ if (isset($_POST['edit_product'])) {
                         $mime_type = finfo_file($finfo, $tmp_name);
                         finfo_close($finfo);
                         
-                        if (in_array($mime_type, ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])) {
-                            $extension_map = ['image/jpeg'=>'jpg', 'image/jpg'=>'jpg', 'image/png'=>'png', 'image/webp'=>'webp'];
+                        if (in_array($mime_type, ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'])) {
+                            $extension_map = ['image/jpeg'=>'jpg', 'image/jpg'=>'jpg', 'image/png'=>'png', 'image/webp'=>'webp', 'image/avif'=>'avif'];
                             $safe_extension = $extension_map[$mime_type];
                             $new_filename = uniqid('product_' . $product_id . '_') . '.' . $safe_extension;
                             
@@ -1030,14 +1029,20 @@ $page_title = "Product Management";
     function toggleLaptopFields() {
         const productType = document.getElementById('productType').value;
         const laptopFields = document.querySelectorAll('.laptop-only-field');
+        const displayFields = document.querySelectorAll('.display-field');
         const relatedCategoryGroup = document.getElementById('relatedCategoryGroup');
         
+        // Hide all initially
+        laptopFields.forEach(field => field.style.display = 'none');
+        displayFields.forEach(field => field.style.display = 'none');
+        relatedCategoryGroup.style.display = 'block';
+
         if (productType === 'laptop') {
             laptopFields.forEach(field => field.style.display = 'block');
+            displayFields.forEach(field => field.style.display = 'block');
             relatedCategoryGroup.style.display = 'none';
-        } else {
-            laptopFields.forEach(field => field.style.display = 'none');
-            relatedCategoryGroup.style.display = 'block';
+        } else if (productType === 'monitor') {
+            displayFields.forEach(field => field.style.display = 'block');
         }
     }
 
@@ -1045,14 +1050,20 @@ $page_title = "Product Management";
     function toggleEditLaptopFields() {
         const productType = document.getElementById('editProductType').value;
         const laptopFields = document.querySelectorAll('.edit-laptop-only-field');
+        const displayFields = document.querySelectorAll('.edit-display-field');
         const relatedCategoryGroup = document.getElementById('editRelatedCategoryGroup');
         
+        // Hide all initially
+        laptopFields.forEach(field => field.style.display = 'none');
+        displayFields.forEach(field => field.style.display = 'none');
+        if (relatedCategoryGroup) relatedCategoryGroup.style.display = 'block';
+
         if (productType === 'laptop' || productType === '') {
             laptopFields.forEach(field => field.style.display = 'block');
+            displayFields.forEach(field => field.style.display = 'block');
             if (relatedCategoryGroup) relatedCategoryGroup.style.display = 'none';
-        } else {
-            laptopFields.forEach(field => field.style.display = 'none');
-            if (relatedCategoryGroup) relatedCategoryGroup.style.display = 'block';
+        } else if (productType === 'monitor') {
+            displayFields.forEach(field => field.style.display = 'block');
         }
     }
 
@@ -1403,9 +1414,9 @@ $page_title = "Product Management";
                                         </select>
                                     </div>
                                     
-                                    <div class="form-group mb-3 laptop-only-field">
+                                    <div class="form-group mb-3 display-field">
                                         <label for="productDisplay">Display Size (inches)</label>
-                                        <input type="number" class="form-control" id="productDisplay" name="display" placeholder="15.6" step="0.1" min="10" max="20">
+                                        <input type="number" class="form-control" id="productDisplay" name="display" placeholder="15.6" step="0.1">
                                     </div>
 
                                     <div class="form-group mb-3 laptop-only-field">
@@ -1415,13 +1426,13 @@ $page_title = "Product Management";
                                     
                                     <div class="form-group mb-3">
                                         <label for="image">Primary Product Image</label>
-                                        <input type="file" class="form-control" id="image" name="product_image" accept="image/png,image/jpeg,image/jpg,image/webp">
-                                        <small class="text-muted">Accepted formats: JPG, PNG, WEBP (Max 5MB)</small>
+                                        <input type="file" class="form-control" id="image" name="product_image" accept="image/png,image/jpeg,image/jpg,image/webp,image/avif">
+                                        <small class="text-muted">Accepted formats: JPG, PNG, WEBP, AVIF (Max 5MB)</small>
                                     </div>
                                     
                                     <div class="form-group mb-3">
                                         <label>Additional Product Images (Optional)</label>
-                                        <input type="file" class="form-control" id="additionalImages" name="additional_images[]" multiple accept="image/png,image/jpeg,image/jpg,image/webp" onchange="previewAdditionalImages(this)">
+                                        <input type="file" class="form-control" id="additionalImages" name="additional_images[]" multiple accept="image/png,image/jpeg,image/jpg,image/webp,image/avif" onchange="previewAdditionalImages(this)">
                                         <small class="text-muted">Upload multiple images (Max 5MB each)</small>
                                         <div id="imagePreviewContainer" class="row g-2 mt-2"></div>
                                     </div>
@@ -1561,9 +1572,9 @@ $page_title = "Product Management";
                                 </select>
                             </div>
                             
-                            <div class="form-group mb-3 edit-laptop-only-field">
+                            <div class="form-group mb-3 edit-display-field">
                                 <label for="editProductDisplay">Display Size (inches)</label>
-                                <input type="number" class="form-control" id="editProductDisplay" name="display" placeholder="15.6" step="0.1" min="10" max="20">
+                                <input type="number" class="form-control" id="editProductDisplay" name="display" placeholder="15.6" step="0.1">
                             </div>
 
                             <div class="form-group mb-3 edit-laptop-only-field">
@@ -1577,13 +1588,13 @@ $page_title = "Product Management";
                                     <img src="" class="img-thumbnail" style="max-height: 150px; display: none;" alt="Current product image">
                                 </div>
                                 <label for="editImage">Replace Primary Image (optional)</label>
-                                <input type="file" class="form-control" id="editImage" name="product_image" accept="image/png,image/jpeg,image/jpg,image/webp">
-                                <small class="text-muted">Leave empty to keep current image. Accepted formats: JPG, PNG, WEBP (Max 5MB)</small>
+                                <input type="file" class="form-control" id="editImage" name="product_image" accept="image/png,image/jpeg,image/jpg,image/webp,image/avif">
+                                <small class="text-muted">Leave empty to keep current image. Accepted formats: JPG, PNG, WEBP, AVIF (Max 5MB)</small>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="editAdditionalImages">Add More Images (Optional)</label>
-                                <input type="file" class="form-control" id="editAdditionalImages" name="additional_images[]" multiple accept="image/png,image/jpeg,image/jpg,image/webp">
+                                <input type="file" class="form-control" id="editAdditionalImages" name="additional_images[]" multiple accept="image/png,image/jpeg,image/jpg,image/webp,image/avif">
                                 <small class="text-muted">Upload new images to add to the gallery</small>
                             </div>
                             <div id="editExistingImages"></div>

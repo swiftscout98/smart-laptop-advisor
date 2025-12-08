@@ -482,19 +482,19 @@ if (empty($user['profile_image_url'])) {
                     <option value="Student" <?php if($user['primary_use_case'] == 'Student') echo 'selected'; ?>>
                         🎓 Student
                     </option>
-                    <option value="Professional" <?php if($user['primary_use_case'] == 'Professional' || $user['primary_use_case'] == 'Business') echo 'selected'; ?>>
+                    <option value="Professional" <?php if($user['primary_use_case'] == 'Professional') echo 'selected'; ?>>
                         💼 Professional
                     </option>
                     <option value="Creative" <?php if($user['primary_use_case'] == 'Creative') echo 'selected'; ?>>
                         🎨 Creative
                     </option>
-                    <option value="Gamer" <?php if($user['primary_use_case'] == 'Gamer' || $user['primary_use_case'] == 'Gaming') echo 'selected'; ?>>
+                    <option value="Gamer" <?php if($user['primary_use_case'] == 'Gamer') echo 'selected'; ?>>
                         🎮 Gamer
                     </option>
                     <option value="Developer" <?php if($user['primary_use_case'] == 'Developer') echo 'selected'; ?>>
                         💻 Developer
                     </option>
-                    <option value="Home User" <?php if($user['primary_use_case'] == 'Home User' || $user['primary_use_case'] == 'General Use') echo 'selected'; ?>>
+                    <option value="Home User" <?php if($user['primary_use_case'] == 'Home User') echo 'selected'; ?>>
                         🏠 Home User
                     </option>
                 </select>

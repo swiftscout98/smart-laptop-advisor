@@ -4,7 +4,7 @@ include 'includes/header.php';
 
 // 1. DEFINE USER VARIABLES FIRST
 $user_id = $_SESSION['user_id'];
-$user_pref = 'General Use'; // Default
+$user_pref = 'Home User'; // Default
 
 // Fetch the actual user preference from database
 if (isset($conn)) {
@@ -94,7 +94,7 @@ if ($view == 'browse') {
     }
     
     if (!empty($where_clauses)) { 
-        $sql .= " WHERE " . implode(" AND ", $where_clauses); 
+        $sql .= " AND " . implode(" AND ", $where_clauses); 
     }
     
     // Sort Logic

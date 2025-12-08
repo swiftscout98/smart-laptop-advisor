@@ -357,7 +357,7 @@ $page_title = "Inventory Management";
                     <?php else: ?>
                         <div class="list-group list-group-flush">
                             <?php foreach (array_slice($low_stock_items, 0, 5) as $item): ?>
-                            <div class="list-group-item px-0">
+                            <div class="list-group-item px-0 bg-transparent">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="mb-0"><?php echo htmlspecialchars($item['product_name']); ?></h6>

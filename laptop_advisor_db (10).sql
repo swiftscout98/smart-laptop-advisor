@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2025 at 05:18 AM
+-- Generation Time: Dec 08, 2025 at 11:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -108,7 +108,65 @@ INSERT INTO `admin_activity_log` (`log_id`, `admin_id`, `action`, `module`, `des
 (58, 1, 'update', 'users', 'Updated profile for user ID: 4', 'user', 4, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/ajax/update_customer.php', NULL, '2025-12-07 19:38:01'),
 (59, 1, 'update', 'users', 'Updated profile for user ID: 3', 'user', 3, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/ajax/update_customer.php', NULL, '2025-12-07 19:38:04'),
 (60, 1, 'update', 'users', 'Updated profile for user ID: 2', 'user', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/ajax/update_customer.php', NULL, '2025-12-07 19:38:07'),
-(61, 1, 'update', 'users', 'Updated profile for user ID: 1', 'user', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/ajax/update_customer.php', NULL, '2025-12-07 19:38:10');
+(61, 1, 'update', 'users', 'Updated profile for user ID: 1', 'user', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/ajax/update_customer.php', NULL, '2025-12-07 19:38:10'),
+(62, 1, 'logout', 'auth', 'Admin logged out', NULL, NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/logout.php', NULL, '2025-12-08 06:22:23'),
+(63, 1, 'login', 'auth', 'Admin logged in successfully', NULL, NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/login.php', NULL, '2025-12-08 06:22:41'),
+(64, 1, 'update', 'products', 'Updated product: IdeaPad Slim 3', 'product', 4, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 06:44:47'),
+(65, 1, 'update', 'products', 'Updated product: ASUS ProArt Display PA279CRV', 'product', 227, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:04:33'),
+(66, 1, 'update', 'products', 'Updated product: Wooting 60HE', 'product', 218, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:05:08'),
+(67, 1, 'update', 'products', 'Updated product: Keychron M3 Wireless', 'product', 213, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:18:31'),
+(68, 1, 'update', 'products', 'Updated product: Sony WH-1000XM5', 'product', 219, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:21:00'),
+(69, 1, 'update', 'products', 'Updated product: Sony WH-1000XM5', 'product', 219, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:22:46'),
+(70, 1, 'update', 'products', 'Updated product: Sony WH-1000XM5', 'product', 219, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:22:53'),
+(71, 1, 'update', 'products', 'Updated product: ASUS ROG Strix Scar 18 (2024)', 'product', 179, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:23:00'),
+(72, 1, 'update', 'products', 'Updated product: Razer Blade 16 (2024)', 'product', 180, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:23:37'),
+(73, 1, 'update', 'products', 'Updated product: MSI Titan 18 HX', 'product', 181, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:24:02'),
+(74, 1, 'update', 'products', 'Updated product: Alienware m18 R2', 'product', 182, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:24:22'),
+(75, 1, 'update', 'products', 'Updated product: Lenovo Legion 9i Gen 9', 'product', 183, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:24:58'),
+(76, 1, 'update', 'products', 'Updated product: Lenovo Legion 9i Gen 9', 'product', 183, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:25:15'),
+(77, 1, 'update', 'products', 'Updated product: Acer Predator Helios 18', 'product', 184, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:25:44'),
+(78, 1, 'update', 'products', 'Updated product: Acer Predator Helios 18', 'product', 184, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:26:17'),
+(79, 1, 'update', 'products', 'Updated product: HP Omen Transcend 14', 'product', 185, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:26:38'),
+(80, 1, 'update', 'products', 'Updated product: ASUS Zephyrus G14 (2024)', 'product', 186, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:32:42'),
+(81, 1, 'update', 'products', 'Updated product: GIGABYTE AORUS 17X', 'product', 187, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:33:42'),
+(82, 1, 'update', 'products', 'Updated product: Dell G16 Gaming Laptop', 'product', 188, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:34:04'),
+(83, 1, 'update', 'products', 'Updated product: Apple MacBook Pro 14 (M3 Max)', 'product', 189, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:36:22'),
+(84, 1, 'update', 'products', 'Updated product: Dell XPS 16 (2024)', 'product', 190, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:37:25'),
+(85, 1, 'update', 'products', 'Updated product: Lenovo ThinkPad X1 Carbon Gen 12', 'product', 191, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:38:44'),
+(86, 1, 'update', 'products', 'Updated product: HP Dragonfly G4', 'product', 192, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 07:41:41'),
+(87, 1, 'update', 'products', 'Updated product: Microsoft Surface Laptop 6', 'product', 193, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:01:19'),
+(88, 1, 'update', 'products', 'Updated product: Framework Laptop 13 (AMD)', 'product', 194, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:02:01'),
+(89, 1, 'update', 'products', 'Updated product: LG Gram Pro 16 2-in-1', 'product', 195, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:02:22'),
+(90, 1, 'update', 'products', 'Updated product: Samsung Galaxy Book4 Ultra', 'product', 196, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:02:43'),
+(91, 1, 'update', 'products', 'Updated product: ASUS ProArt Studiobook 16', 'product', 197, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:03:00'),
+(92, 1, 'update', 'products', 'Updated product: MacBook Air 15 (M3)', 'product', 198, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:03:18'),
+(93, 1, 'update', 'products', 'Updated product: MSI Creator Z17 HX Studio', 'product', 199, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:03:37'),
+(94, 1, 'update', 'products', 'Updated product: Dell Precision 5680', 'product', 200, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:03:56'),
+(95, 1, 'update', 'products', 'Updated product: Surface Laptop Studio 2', 'product', 201, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:04:19'),
+(96, 1, 'update', 'products', 'Updated product: Lenovo Yoga Pro 9i', 'product', 202, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:04:48'),
+(97, 1, 'update', 'products', 'Updated product: Acer Swift Go 14', 'product', 203, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:05:16'),
+(98, 1, 'update', 'products', 'Updated product: ASUS Vivobook S 15 OLED', 'product', 204, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:05:34'),
+(99, 1, 'update', 'products', 'Updated product: HP Envy x360 14', 'product', 205, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:06:00'),
+(100, 1, 'update', 'products', 'Updated product: Lenovo IdeaPad Slim 5 Gen 9', 'product', 206, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:06:20'),
+(101, 1, 'update', 'products', 'Updated product: Dell Inspiron 14 Plus', 'product', 207, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:06:38'),
+(102, 1, 'update', 'products', 'Updated product: MacBook Air 13 (M2)', 'product', 208, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:07:02'),
+(103, 1, 'update', 'products', 'Updated product: Logitech MX Master 3S', 'product', 209, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:07:21'),
+(104, 1, 'update', 'products', 'Updated product: Razer DeathAdder V3 Pro', 'product', 210, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:07:46'),
+(105, 1, 'update', 'products', 'Updated product: Logitech G502 X Plus', 'product', 211, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:08:02'),
+(106, 1, 'update', 'products', 'Updated product: Apple Magic Mouse', 'product', 212, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:08:21'),
+(107, 1, 'update', 'products', 'Updated product: Keychron Q1 Pro', 'product', 214, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:08:40'),
+(108, 1, 'update', 'products', 'Updated product: Logitech MX Keys S', 'product', 215, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:08:59'),
+(109, 1, 'update', 'products', 'Updated product: Razer Huntsman V3 Pro', 'product', 216, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:09:18'),
+(110, 1, 'update', 'products', 'Updated product: ASUS ProArt Display PA279CRV', 'product', 227, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:09:37'),
+(111, 1, 'update', 'products', 'Updated product: NuPhy Air75 V2', 'product', 217, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:09:57'),
+(112, 1, 'update', 'products', 'Updated product: Bose QuietComfort Ultra', 'product', 220, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:10:18'),
+(113, 1, 'update', 'products', 'Updated product: SteelSeries Arctis Nova Pro Wireless', 'product', 221, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:10:32'),
+(114, 1, 'update', 'products', 'Updated product: Razer BlackShark V2 Pro (2023)', 'product', 222, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:10:48'),
+(115, 1, 'update', 'products', 'Updated product: HyperX Cloud III Wireless', 'product', 223, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:11:06'),
+(116, 1, 'update', 'products', 'Updated product: Dell UltraSharp U2723QE', 'product', 224, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:11:22'),
+(117, 1, 'update', 'products', 'Updated product: LG C3 42-inch OLED', 'product', 225, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:11:39'),
+(118, 1, 'update', 'products', 'Updated product: Samsung Odyssey OLED G9', 'product', 226, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:11:55'),
+(119, 1, 'update', 'products', 'Updated product: BenQ ScreenBar Halo', 'product', 228, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', NULL, '/fyp/admin/admin_products.php', NULL, '2025-12-08 10:12:12');
 
 -- --------------------------------------------------------
 
@@ -143,6 +201,7 @@ INSERT INTO `admin_sessions` (`session_id`, `admin_id`, `ip_address`, `user_agen
 ('8dd810838b06ecb04f0dabc70db18acc422fd087f6672642649f0a97524cae27', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', '2025-11-22 04:34:31', '2025-11-22 04:34:31', '2025-11-23 04:34:31', 1),
 ('9dc7628840225b89fd580e0584845d2c1a32f16bed8c713599a1ff6980ee99c7', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', '2025-11-22 04:35:07', '2025-11-22 04:35:07', '2025-11-23 04:35:07', 1),
 ('c413ddfda91a8cadd37df9d45ce663c101d1ff00fa9aaaa0c6df38374830ef95', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', '2025-12-02 19:29:42', '2025-12-02 19:29:42', '2025-12-03 19:29:42', 1),
+('dac0fd08b5dae7da01e3cf953d39e7b926dfc277367290e37bb6586bd20eee59', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', '2025-12-08 14:22:41', '2025-12-08 14:22:41', '2025-12-09 14:22:41', 1),
 ('e9ee9f9532698841ed7956ad667311a8e3d92c888c9a010314e880a13dbb2ecf', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', '2025-12-01 14:36:36', '2025-12-01 14:36:36', '2025-12-02 14:36:36', 1);
 
 -- --------------------------------------------------------
@@ -184,7 +243,7 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`admin_id`, `admin_code`, `first_name`, `last_name`, `email`, `password_hash`, `role_id`, `status`, `last_login`, `login_count`, `failed_login_attempts`, `last_failed_login`, `lockout_until`, `two_factor_enabled`, `two_factor_secret`, `profile_picture`, `phone`, `timezone`, `language`, `email_notifications`, `force_password_change`, `password_last_changed`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'ADMIN-001', 'Admin', 'Cho Choong Kit', 'sarah.johnson@smartlaptop.com', '$2y$10$16u7PX4cGXybAi5et0rXTuNPdX8XiOQYQBUwHfmPun7IBiQGMrwL2', 1, 'active', '2025-12-08 03:21:37', 3, 0, NULL, NULL, 0, NULL, NULL, NULL, 'America/New_York', 'en', 1, 0, NULL, NULL, '2025-11-21 20:12:32', '2025-12-07 19:21:37'),
+(1, 'ADMIN-001', 'Admin', 'Cho Choong Kit', 'sarah.johnson@smartlaptop.com', '$2y$10$16u7PX4cGXybAi5et0rXTuNPdX8XiOQYQBUwHfmPun7IBiQGMrwL2', 1, 'active', '2025-12-08 14:22:41', 4, 0, NULL, NULL, 0, NULL, NULL, NULL, 'America/New_York', 'en', 1, 0, NULL, NULL, '2025-11-21 20:12:32', '2025-12-08 06:22:41'),
 (2, 'ADMIN-002', 'Michael', 'Chen', 'michael.chen@smartlaptop.com', '$2y$10$16u7PX4cGXybAi5et0rXTuNPdX8XiOQYQBUwHfmPun7IBiQGMrwL2', 2, 'active', '2025-11-22 04:35:49', 1, 0, NULL, NULL, 0, NULL, NULL, NULL, 'America/New_York', 'en', 1, 0, NULL, NULL, '2025-11-21 20:12:32', '2025-11-24 17:11:28'),
 (3, 'ADMIN-003', 'Emily', 'Rodriguez', 'emily.rodriguez@smartlaptop.com', '$2y$10$16u7PX4cGXybAi5et0rXTuNPdX8XiOQYQBUwHfmPun7IBiQGMrwL2', 4, 'active', NULL, 1, 0, NULL, NULL, 0, NULL, NULL, NULL, 'America/New_York', 'en', 1, 0, NULL, NULL, '2025-11-21 20:12:32', '2025-12-07 18:50:38'),
 (4, 'ADMIN-004', 'David', 'Kim', 'david.kim@smartlaptop.com', '$2y$10$16u7PX4cGXybAi5et0rXTuNPdX8XiOQYQBUwHfmPun7IBiQGMrwL2', 3, 'active', NULL, 1, 0, NULL, NULL, 0, NULL, NULL, NULL, 'America/New_York', 'en', 1, 0, NULL, NULL, '2025-11-21 20:12:32', '2025-12-07 18:50:41'),
@@ -813,7 +872,9 @@ CREATE TABLE `inventory_logs` (
 INSERT INTO `inventory_logs` (`log_id`, `product_id`, `change_amount`, `change_type`, `note`, `created_at`) VALUES
 (1, 121, 20, 'restock', '', '2025-12-02 13:21:38'),
 (2, 117, -46, 'adjustment', 'Manual update via inventory page', '2025-12-02 13:21:50'),
-(3, 117, 11, 'restock', '', '2025-12-02 13:21:52');
+(3, 117, 11, 'restock', '', '2025-12-02 13:21:52'),
+(4, 208, -41, 'adjustment', 'Manual update via inventory page', '2025-12-08 10:12:33'),
+(5, 227, -43, 'adjustment', 'Manual update via inventory page', '2025-12-08 10:12:49');
 
 -- --------------------------------------------------------
 
@@ -1043,14 +1104,64 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_category`, `relat
 (1, 'Creator Z16', 'laptop', NULL, 'MSI', 2499.99, 50, 10, 'Intel Core i7', 'NVIDIA RTX 3060', 16, 1024, 'SSD', 16.00, NULL, 'images/laptop1.png', 'A powerful laptop for creative professionals.', 'Creative', 1),
 (2, 'ZenBook Duo', 'laptop', NULL, 'Asus', 1999.00, 50, 10, 'Intel Core i9', 'NVIDIA RTX 3070', 32, 1024, 'SSD', 14.00, '', 'images/laptop2.png', 'Dual-screen laptop for ultimate productivity.', 'Professional', 1),
 (3, 'Blade 15', 'laptop', NULL, 'Razer', 2999.50, 50, 10, 'Intel Core i7', 'NVIDIA RTX 3080', 16, 1024, 'SSD', 15.60, '', 'images/laptop3.png', 'The ultimate gaming laptop with a sleek design.', 'Gamer', 1),
-(4, 'IdeaPad Slim 3', 'laptop', NULL, 'Lenovo', 649.00, 50, 10, 'AMD Ryzen 5', 'Integrated Radeon', 8, 512, 'SSD', 15.60, NULL, 'images/laptop4.jpg', 'Great for students and everyday tasks.', 'Student', 1),
+(4, 'IdeaPad Slim 3', 'laptop', NULL, 'Lenovo', 649.00, 50, 10, 'AMD Ryzen 5', 'Integrated Radeon', 8, 512, 'SSD', 15.60, '', 'images/laptop4.jpg', 'Great for students and everyday tasks.', 'Home User', 1),
 (5, 'MacBook Pro 16', 'laptop', NULL, 'Apple', 3499.00, 50, 10, 'Apple M2 Pro', 'Integrated', 16, 1024, 'SSD', 16.20, NULL, 'images/laptop5.png', 'Powerful performance for professionals and creatives.', 'Creative', 1),
-(6, 'Spectre x360', 'laptop', NULL, 'HP', 1450.00, 50, 10, 'Intel Core i7', 'Intel Iris Xe', 16, 512, 'SSD', 13.50, NULL, 'images/laptop6.png', 'A versatile 2-in-1 laptop with a premium feel.', 'Business', 1),
+(6, 'Spectre x360', 'laptop', NULL, 'HP', 1450.00, 50, 10, 'Intel Core i7', 'Intel Iris Xe', 16, 512, 'SSD', 13.50, NULL, 'images/laptop6.png', 'A versatile 2-in-1 laptop with a premium feel.', 'Professional', 1),
 (7, 'ROG Strix G15', 'laptop', NULL, 'Asus', 1899.99, 49, 10, 'AMD Ryzen 9', 'NVIDIA RTX 3070', 16, 1024, 'SSD', 15.60, '', 'images/laptop7.png', 'High-refresh-rate gaming powerhouse.', 'Gamer', 1),
-(8, 'Pavilion 15', 'mouse', NULL, 'HP', 799.00, 40, 10, 'Intel Core i5', 'Intel Iris Xe', 12, 512, 'SSD', 15.60, NULL, 'LaptopAdvisor/images/product_692eee166259e.jpg', 'A reliable all-rounder for work and entertainment.', 'General', 0),
-(117, 'Logitech G ', 'mouse', 'Gaming', 'Logitech ', 300.00, 12, 10, '', '', 0, 0, 'SSD', 0.00, NULL, 'LaptopAdvisor/images/product_692d9b1204696.webp', '', 'Gaming', 0),
-(124, 'Razer BlackWidow V3', 'keyboard', 'Gaming', 'Razer', 139.99, 48, 10, '', '', 0, 0, '', 0.00, NULL, NULL, 'Mechanical gaming keyboard with Razer Green switches and RGB', 'Gaming', 0),
-(128, 'Asus ROG Strix G16', 'laptop', NULL, 'Asus', 5000.00, 47, 10, ' i7-13650HX', 'NVIDIA GeForce RTX 4060', 32, 1024, 'SSD', 15.60, '', 'LaptopAdvisor/images/product_692f0409da2d4.webp', 'Power Power Up Your Gaming – Windows 11, 13th Gen Intel Core i7-13650HX Processor And NVIDIA GeForce RTX 4060 Laptop GPU, Up To 140W TGP To Win More Games\r\n\r\n', 'Developer', 1);
+(8, 'Pavilion 15', 'mouse', NULL, 'HP', 799.00, 40, 10, 'Intel Core i5', 'Intel Iris Xe', 12, 512, 'SSD', 15.60, NULL, 'LaptopAdvisor/images/product_692eee166259e.jpg', 'A reliable all-rounder for work and entertainment.', 'Home User', 0),
+(117, 'Logitech G ', 'mouse', 'Gaming', 'Logitech ', 300.00, 12, 10, '', '', 0, 0, 'SSD', 0.00, NULL, 'LaptopAdvisor/images/product_692d9b1204696.webp', '', 'Gamer', 0),
+(124, 'Razer BlackWidow V3', 'keyboard', 'Gaming', 'Razer', 139.99, 48, 10, '', '', 0, 0, '', 0.00, NULL, NULL, 'Mechanical gaming keyboard with Razer Green switches and RGB', 'Gamer', 0),
+(128, 'Asus ROG Strix G16', 'laptop', NULL, 'Asus', 5000.00, 47, 10, ' i7-13650HX', 'NVIDIA GeForce RTX 4060', 32, 1024, 'SSD', 15.60, '', 'LaptopAdvisor/images/product_692f0409da2d4.webp', 'Power Power Up Your Gaming – Windows 11, 13th Gen Intel Core i7-13650HX Processor And NVIDIA GeForce RTX 4060 Laptop GPU, Up To 140W TGP To Win More Games\r\n\r\n', 'Developer', 1),
+(179, 'ASUS ROG Strix Scar 18 (2024)', 'laptop', NULL, 'ASUS', 3899.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4090', 32, 2000, 'SSD', 18.00, '', 'LaptopAdvisor/images/product_69367cd44bfff.jpg', 'Ultimate gaming powerhouse with 18-inch Mini LED display.', 'Gamer', 1),
+(180, 'Razer Blade 16 (2024)', 'laptop', NULL, 'Razer', 3299.99, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4080', 32, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_69367cf9e8460.jpg', 'Sleek and powerful with the world\'s first OLED 240Hz display.', 'Gamer', 1),
+(181, 'MSI Titan 18 HX', 'laptop', NULL, 'MSI', 4999.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4090', 128, 4000, 'SSD', 18.00, '', 'LaptopAdvisor/images/product_69367d1295865.png', 'Desktop replacement with mechanical keyboard and extreme performance.', 'Gamer', 1),
+(182, 'Alienware m18 R2', 'laptop', NULL, 'Dell', 2599.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4070', 16, 1000, 'SSD', 18.00, '', 'LaptopAdvisor/images/product_69367d2679824.jpg', 'Massive screen real estate for immersive gaming.', 'Gamer', 1),
+(183, 'Lenovo Legion 9i Gen 9', 'laptop', NULL, 'Lenovo', 4399.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4090', 64, 2000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_69367d5b73c1c.webp', 'Liquid-cooled gaming laptop with AI-tuned performance.', 'Gamer', 1),
+(184, 'Acer Predator Helios 18', 'laptop', NULL, 'Acer', 2499.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4080', 32, 2000, 'SSD', 18.00, '', 'LaptopAdvisor/images/product_69367d99a6aa3.png', 'High-performance gaming laptop with vibrant Mini-LED screen.', 'Gamer', 1),
+(185, 'HP Omen Transcend 14', 'laptop', NULL, 'HP', 1699.00, 50, 10, 'Intel Core Ultra 9 185H', 'NVIDIA GeForce RTX 4060', 16, 1000, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_69367daea63d6.webp', 'Lightweight portable gaming laptop with OLED display.', 'Gamer', 1),
+(186, 'ASUS Zephyrus G14 (2024)', 'laptop', NULL, 'ASUS', 1999.00, 50, 10, 'AMD Ryzen 9 8945HS', 'NVIDIA GeForce RTX 4070', 32, 1000, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_69367f1a0b4ff.png', 'The king of compact gaming laptops redesign with OLED.', 'Gamer', 1),
+(187, 'GIGABYTE AORUS 17X', 'laptop', NULL, 'GIGABYTE', 2299.00, 50, 10, 'Intel Core i9-14900HX', 'NVIDIA GeForce RTX 4080', 32, 2000, 'SSD', 17.30, '', 'LaptopAdvisor/images/product_69367f56cc140.webp', 'Powerful craftsmanship for hardcore gamers.', 'Gamer', 1),
+(188, 'Dell G16 Gaming Laptop', 'laptop', NULL, 'Dell', 1499.00, 50, 10, 'Intel Core i7-13650HX', 'NVIDIA GeForce RTX 4060', 16, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_69367f6c6ecb3.avif', 'Best value mainstream gaming laptop.', 'Gamer', 1),
+(189, 'Apple MacBook Pro 14 (M3 Max)', 'laptop', NULL, 'Apple', 3199.00, 50, 10, 'Apple M3 Max', 'Integrated 30-core GPU', 36, 1000, 'SSD', 14.20, '', 'LaptopAdvisor/images/product_69367ff6d61d9.webp', 'Unmatched performance and battery life for professionals.', 'Professional', 1),
+(190, 'Dell XPS 16 (2024)', 'laptop', NULL, 'Dell', 2899.00, 50, 10, 'Intel Core Ultra 7 155H', 'NVIDIA GeForce RTX 4060', 32, 1000, 'SSD', 16.30, '', 'LaptopAdvisor/images/product_693680350a7b9.jpg', 'Futuristic design with invisible trackpad and OLED touch.', 'Professional', 1),
+(191, 'Lenovo ThinkPad X1 Carbon Gen 12', 'laptop', NULL, 'Lenovo', 1899.00, 50, 10, 'Intel Core Ultra 7 155U', 'Integrated Intel Graphics', 32, 512, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_6936808435c91.avif', 'The ultimate business ultrabook, now with AI capabilities.', 'Professional', 1),
+(192, 'HP Dragonfly G4', 'laptop', NULL, 'HP', 1749.00, 50, 10, 'Intel Core i7-1365U', 'Integrated Intel Iris Xe', 16, 1000, 'SSD', 13.50, '', 'LaptopAdvisor/images/product_6936813544085.jpg', 'Incredibly light business laptop with great webcam features.', 'Professional', 1),
+(193, 'Microsoft Surface Laptop 6', 'laptop', NULL, 'Microsoft', 1599.00, 50, 10, 'Intel Core Ultra 5 135H', 'Integrated Intel Graphics', 16, 512, 'SSD', 13.50, '', 'LaptopAdvisor/images/product_6936a1ef67202.jpg', 'Sleek, productive, and AI-powered.', 'Professional', 1),
+(194, 'Framework Laptop 13 (AMD)', 'laptop', NULL, 'Framework', 1499.00, 50, 10, 'AMD Ryzen 7 7840U', 'Integrated Radeon 780M', 32, 1000, 'SSD', 13.50, '', 'LaptopAdvisor/images/product_6936a2195b567.jpg', 'Modular, repairable, and upgradeable.', 'Professional', 1),
+(195, 'LG Gram Pro 16 2-in-1', 'laptop', NULL, 'LG', 1799.00, 50, 10, 'Intel Core Ultra 7 155H', 'Integrated Intel Graphics', 16, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a22e5fe6b.jpg', 'World\'s lightest 16-inch 2-in-1 laptop.', 'Professional', 1),
+(196, 'Samsung Galaxy Book4 Ultra', 'laptop', NULL, 'Samsung', 2399.00, 50, 10, 'Intel Core Ultra 9 185H', 'NVIDIA GeForce RTX 4070', 32, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a243b3c62.jpg', 'Premium AMOLED display and seamless Galaxy ecosystem.', 'Professional', 1),
+(197, 'ASUS ProArt Studiobook 16', 'laptop', NULL, 'ASUS', 2599.00, 50, 10, 'Intel Core i9-13980HX', 'NVIDIA RTX 3000 Ada', 64, 2000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a254de3af.jpg', 'Designed for creators with a physical dial for precision control.', 'Creative', 1),
+(198, 'MacBook Air 15 (M3)', 'laptop', NULL, 'Apple', 1499.00, 50, 10, 'Apple M3', 'Integrated 10-core GPU', 16, 512, 'SSD', 15.30, '', 'LaptopAdvisor/images/product_6936a26677933.jpg', 'Big screen, thin design, perfect for on-the-go creators.', 'Creative', 1),
+(199, 'MSI Creator Z17 HX Studio', 'laptop', NULL, 'MSI', 2899.00, 50, 10, 'Intel Core i9-13950HX', 'NVIDIA GeForce RTX 4070', 32, 2000, 'SSD', 17.00, '', 'LaptopAdvisor/images/product_6936a279c6110.jpg', 'Combines aesthetics with top-tier performance for designers.', 'Creative', 1),
+(200, 'Dell Precision 5680', 'laptop', NULL, 'Dell', 3200.00, 50, 10, 'Intel Core i7-13800H', 'NVIDIA RTX 2000 Ada', 32, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a28ca961e.avif', 'Mobile workstation power in a thin chassis.', 'Creative', 1),
+(201, 'Surface Laptop Studio 2', 'laptop', NULL, 'Microsoft', 2699.00, 50, 10, 'Intel Core i7-13700H', 'NVIDIA GeForce RTX 4060', 64, 1000, 'SSD', 14.40, '', 'LaptopAdvisor/images/product_6936a2a37687e.avif', 'Pull-forward touchscreen for drawing and designing.', 'Creative', 1),
+(202, 'Lenovo Yoga Pro 9i', 'laptop', NULL, 'Lenovo', 1899.00, 50, 10, 'Intel Core Ultra 9 185H', 'NVIDIA GeForce RTX 4060', 32, 1000, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a2c08d31a.avif', 'Mini-LED display perfect for photo editing.', 'Creative', 1),
+(203, 'Acer Swift Go 14', 'laptop', NULL, 'Acer', 849.00, 50, 10, 'Intel Core Ultra 5 125H', 'Integrated Intel Graphics', 16, 512, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_6936a2dca052d.jpg', 'OLED display on a budget, perfect for students.', 'Student', 1),
+(204, 'ASUS Vivobook S 15 OLED', 'laptop', NULL, 'ASUS', 999.00, 50, 10, 'Intel Core Ultra 7 155H', 'Integrated Intel Graphics', 16, 1000, 'SSD', 15.60, '', 'LaptopAdvisor/images/product_6936a2ee6f1f8.jpg', 'Vibrant screen and solid performance for everyday classwork.', 'Student', 1),
+(205, 'HP Envy x360 14', 'laptop', NULL, 'HP', 959.00, 50, 10, 'AMD Ryzen 7 8840HS', 'Integrated Radeon 780M', 16, 1000, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_6936a308a5eda.jpg', 'Versatile 2-in-1 for note-taking and studying.', 'Student', 1),
+(206, 'Lenovo IdeaPad Slim 5 Gen 9', 'laptop', NULL, 'Lenovo', 749.00, 50, 10, 'AMD Ryzen 5 8645HS', 'Integrated Radeon Graphics', 16, 512, 'SSD', 16.00, '', 'LaptopAdvisor/images/product_6936a31c3c456.jpg', 'Reliable and affordable big-screen laptop for home use.', 'Home User', 1),
+(207, 'Dell Inspiron 14 Plus', 'laptop', NULL, 'Dell', 999.00, 50, 10, 'Intel Core i7-13620H', 'Integrated Intel UHD', 16, 1000, 'SSD', 14.00, '', 'LaptopAdvisor/images/product_6936a32ec223b.jpg', 'Solid build quality and reliable performance.', 'Home User', 1),
+(208, 'MacBook Air 13 (M2)', 'laptop', NULL, 'Apple', 999.00, 9, 10, 'Apple M2', 'Integrated 8-core GPU', 8, 256, 'SSD', 13.60, '', 'LaptopAdvisor/images/product_6936a3466d607.jpg', 'The gold standard for student laptops.', 'Student', 1),
+(209, 'Logitech MX Master 3S', 'mouse', NULL, 'Logitech', 99.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a359a388b.jpg', 'Ultimate productivity mouse with quiet clicks.', 'Professional', 1),
+(210, 'Razer DeathAdder V3 Pro', 'mouse', NULL, 'Razer', 149.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a3721f85f.jpg', 'Ultra-lightweight esports gaming mouse.', 'Gamer', 1),
+(211, 'Logitech G502 X Plus', 'mouse', NULL, 'Logitech', 139.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a382f2d0b.jpg', 'Legendary gaming mouse reinvented with hybrid switches.', 'Gamer', 1),
+(212, 'Apple Magic Mouse', 'mouse', NULL, 'Apple', 79.00, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a39562bea.jpg', 'Multi-touch surface mouse for Mac users.', 'Creative', 1),
+(213, 'Keychron M3 Wireless', 'mouse', NULL, 'Keychron', 49.00, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_69367bc747aa0.webp', 'Best value wireless optical mouse.', 'Home User', 1),
+(214, 'Keychron Q1 Pro', 'keyboard', NULL, 'Keychron', 199.00, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a3a8c3d30.jpg', 'Custom mechanical keyboard with aluminum body.', 'Professional', 1),
+(215, 'Logitech MX Keys S', 'keyboard', NULL, 'Logitech', 109.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a3bbe1fcd.jpg', 'Low-profile wireless keyboard for coding and writing.', 'Professional', 1),
+(216, 'Razer Huntsman V3 Pro', 'keyboard', NULL, 'Razer', 249.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a3cea8b34.jpg', 'Analog optical switches for rapid triggers.', 'Gamer', 1),
+(217, 'NuPhy Air75 V2', 'keyboard', NULL, 'NuPhy', 119.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a3f5ae8ef.jpg', 'Slim mechanical keyboard perfect for travel.', 'Creative', 1),
+(218, 'Wooting 60HE', 'keyboard', NULL, 'Wooting', 174.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_693678a455b9c.webp', 'The fastest keyboard for competitive gaming.', 'Gamer', 1),
+(219, 'Sony WH-1000XM5', 'headset', NULL, 'Sony', 399.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_69367ccddc5c3.webp', 'Industry-leading noise canceling headphones.', 'Home User', 1),
+(220, 'Bose QuietComfort Ultra', 'headset', NULL, 'Bose', 429.00, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a40ab3501.webp', 'World-class comfort and silence.', 'Professional', 1),
+(221, 'SteelSeries Arctis Nova Pro Wireless', 'headset', NULL, 'SteelSeries', 349.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a418c2c44.avif', 'Premium gaming audio with dual-battery system.', 'Gamer', 1),
+(222, 'Razer BlackShark V2 Pro (2023)', 'headset', NULL, 'Razer', 199.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a4284f4a7.jpg', 'Esports headset with crystal-clear microphone.', 'Gamer', 1),
+(223, 'HyperX Cloud III Wireless', 'headset', NULL, 'HyperX', 169.99, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a43aa439a.avif', 'Comfortable and durable headset with massive battery.', 'Home User', 1),
+(224, 'Dell UltraSharp U2723QE', 'monitor', NULL, 'Dell', 629.99, 50, 10, '', '', 0, 0, 'SSD', 27.00, '', 'LaptopAdvisor/images/product_6936a44abb5fa.jpg', '4K IPS Black monitor with incredible contrast.', 'Professional', 1),
+(225, 'LG C3 42-inch OLED', 'monitor', NULL, 'LG', 999.99, 50, 10, '', '', 0, 0, 'SSD', 42.00, '', 'LaptopAdvisor/images/product_6936a45bcc508.jpg', 'OLED TV widely used as a high-end gaming monitor.', 'Gamer', 1),
+(226, 'Samsung Odyssey OLED G9', 'monitor', NULL, 'Samsung', 1799.99, 50, 10, '', '', 0, 0, 'SSD', 49.00, '', 'LaptopAdvisor/images/product_6936a46b6e0c7.avif', 'Massive ultrawide OLED for immersive simulation.', 'Gamer', 1),
+(227, 'ASUS ProArt Display PA279CRV', 'monitor', NULL, 'ASUS', 499.00, 7, 10, '', '', 0, 0, 'SSD', 27.00, '', 'LaptopAdvisor/images/product_6936a3e187eb4.jpg', 'Color-accurate 4K monitor for designers.', 'Creative', 1),
+(228, 'BenQ ScreenBar Halo', 'other', NULL, 'BenQ', 179.00, 50, 10, '', '', 0, 0, 'SSD', 0.00, '', 'LaptopAdvisor/images/product_6936a47cc8c4b.png', 'Advanced monitor light bar for eye comfort.', 'Professional', 1);
 
 -- --------------------------------------------------------
 
@@ -1532,7 +1643,7 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password_hash`, `status`,
 (2, 'xuan', 'chan123@GMAIL.COM', '$2y$10$UqWAFCaxniqS5NKJDYgndOWtGvfVlv3rwWfdJVo.f0mbUMkYPmY16', 'active', 'uploads/default.png', 'Student', NULL, NULL, NULL, NULL, NULL, NULL, '', '2025-09-28 06:08:01'),
 (3, 'xuan', 'abc@gmail.com', '$2y$10$WbU7EDXaKg0EcfW.B.spWOqvSqrLro1z9NCpw9DW.Z8xMhe04PRMm', 'active', 'uploads/default.png', 'Student', NULL, NULL, NULL, NULL, NULL, NULL, '', '2025-11-11 14:17:17'),
 (4, 'GYZ', 'GYZ@gmail.com', '$2y$10$b2eGc843Cu2g7Q0AyP4w1ulwZTmgomHrPv4QpFC9XtHSOAhlCOrqa', 'active', 'uploads/6920af2dc9395-donk.jpg', 'Professional', 'GWK', 'Tingkat Lahat Mines 4', 'Lahat', 'Perak', '31500', 'Malaysia', '+60165076821', '2025-11-21 18:27:28'),
-(6, 'cck', 'chock-am22@student.tarc.edu.my', '$2y$10$VzgL/FZDSCQeqhGiGgtxae3fX9.z/4QLAIlDDDmk.GhqSNczOI0tm', 'active', 'uploads/693645450d731-donk.jpg', 'Gamer', '', '', '', '', '', '', '', '2025-12-02 07:00:41');
+(6, 'cck', 'chock-am22@student.tarc.edu.my', '$2y$10$VzgL/FZDSCQeqhGiGgtxae3fX9.z/4QLAIlDDDmk.GhqSNczOI0tm', 'active', 'uploads/693645450d731-donk.jpg', 'Student', '', '', '', '', '', '', '', '2025-12-02 07:00:41');
 
 -- --------------------------------------------------------
 
@@ -1843,7 +1954,7 @@ ALTER TABLE `weightage_history`
 -- AUTO_INCREMENT for table `admin_activity_log`
 --
 ALTER TABLE `admin_activity_log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `admin_users`
@@ -1915,7 +2026,7 @@ ALTER TABLE `intent_responses`
 -- AUTO_INCREMENT for table `inventory_logs`
 --
 ALTER TABLE `inventory_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1951,7 +2062,7 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
 
 --
 -- AUTO_INCREMENT for table `product_media`

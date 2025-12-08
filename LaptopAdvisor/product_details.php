@@ -740,8 +740,27 @@ function getUseCaseBadge($use_case) {
 
                     <?php 
                     $img_url = $accessory['image_url'];
-                    // Fix path if it contains the project folder name incorrectly
-                    $img_url = str_replace('LaptopAdvisor/', '', $img_url);
+                    
+                    if (!empty($img_url) && strpos($img_url, 'http') !== 0) {
+                        // Handle generic path fixups
+                        $check_url = $img_url;
+                        
+                        // If it points to LaptopAdvisor/ folder, strip that to make it relative to current dir
+                        if (strpos($check_url, 'LaptopAdvisor/') !== false) {
+                            $check_url = str_replace('LaptopAdvisor/', '', $check_url);
+                        }
+                        
+                        // Clean up ../ to avoid confusion, we want path relative to LaptopAdvisor/
+                        $check_url = str_replace('../', '', $check_url);
+                        
+                        // If it's a deep path (like assets/...) or doesn't start with images/, 
+                        // attempt to find it in images/ folder by filename, unless it's already a valid relative path we trust
+                        if (strpos($check_url, 'images/') !== 0) {
+                             $img_url = 'images/' . basename($check_url);
+                        } else {
+                             $img_url = $check_url;
+                        }
+                    }
                     
                     // Fallback if empty
                     if (empty($img_url)) {
