@@ -453,6 +453,7 @@ $page_title = "Advanced Reports";
                 };
             } else {
                 // Line/Area chart configuration (default)
+                const isMonthly = data.chart.granularity === 'month';
                 newChartOptions = {
                     series: data.chart.series || [],
                     chart: {
@@ -479,10 +480,10 @@ $page_title = "Advanced Reports";
                     },
                     xaxis: {
                         categories: data.chart.categories || [],
-                        type: 'datetime',
+                        type: 'datetime', // ApexCharts handles %Y-%m strings well with this
                         labels: {
                             datetimeUTC: false,
-                            format: 'dd MMM'
+                            format: isMonthly ? 'MMM yyyy' : 'dd MMM'
                         }
                     },
                     yaxis: {
@@ -497,7 +498,7 @@ $page_title = "Advanced Reports";
                     },
                     tooltip: {
                         x: {
-                            format: 'dd MMM yyyy'
+                            format: isMonthly ? 'MMM yyyy' : 'dd MMM yyyy'
                         }
                     },
                     legend: {
@@ -512,9 +513,9 @@ $page_title = "Advanced Reports";
                         }
                     },
                     markers: {
-                        size: 4,
+                        size: isMonthly ? 5 : 2, // Smaller markers for daily data to reduce clutter
                         hover: {
-                            size: 6
+                            size: isMonthly ? 7 : 4
                         }
                     },
                     noData: {

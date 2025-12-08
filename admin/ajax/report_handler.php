@@ -55,14 +55,37 @@ if ($action === 'generate') {
         $stmt->execute();
         $new_users = $stmt->get_result()->fetch_assoc()['total'] ?? 0;
 
-        $dates = getDateRange($dateFrom, $dateTo);
+        $diff = strtotime($dateTo) - strtotime($dateFrom);
+        $days_diff = round($diff / (60 * 60 * 24));
+        $group_by_month = $days_diff > 90;
+
+        $dates = [];
+        if ($group_by_month) {
+            $start = new DateTime($dateFrom);
+            $end = new DateTime($dateTo);
+            $end->modify('first day of next month');
+            $period = new DatePeriod($start, new DateInterval('P1M'), $end);
+            foreach ($period as $dt) {
+                $dates[] = $dt->format('Y-m');
+            }
+        } else {
+            $dates = getDateRange($dateFrom, $dateTo);
+        }
+
         $revenue_data = [];
         $orders_data = [];
 
-        $sql_chart = "SELECT DATE(order_date) as date, SUM(total_amount) as revenue, COUNT(*) as orders 
-                      FROM orders 
-                      WHERE DATE(order_date) BETWEEN ? AND ? 
-                      GROUP BY DATE(order_date)";
+        if ($group_by_month) {
+            $sql_chart = "SELECT DATE_FORMAT(order_date, '%Y-%m') as date, SUM(total_amount) as revenue, COUNT(*) as orders 
+                          FROM orders 
+                          WHERE DATE(order_date) BETWEEN ? AND ? 
+                          GROUP BY DATE_FORMAT(order_date, '%Y-%m')";
+        } else {
+            $sql_chart = "SELECT DATE(order_date) as date, SUM(total_amount) as revenue, COUNT(*) as orders 
+                          FROM orders 
+                          WHERE DATE(order_date) BETWEEN ? AND ? 
+                          GROUP BY DATE(order_date)";
+        }
         $stmt = $conn->prepare($sql_chart);
         $stmt->bind_param("ss", $dateFrom, $dateTo);
         $stmt->execute();
@@ -85,6 +108,7 @@ if ($action === 'generate') {
         ];
         $response['chart'] = [
             'type' => 'line',
+            'granularity' => $group_by_month ? 'month' : 'day',
             'categories' => $dates,
             'series' => [
                 ['name' => 'Revenue', 'data' => $revenue_data],
