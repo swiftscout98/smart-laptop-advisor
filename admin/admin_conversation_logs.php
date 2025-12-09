@@ -313,139 +313,554 @@ while ($row = $hourly_result->fetch_assoc()) {
         font-weight: 600;
     }
     
-    /* Live Chat Preview Panel */
+    /* ============================================
+       ENHANCED CHAT PREVIEW PANEL - Modern Design
+       ============================================ */
     .chat-preview-panel {
         position: fixed;
-        right: -450px;
+        right: -520px;
         top: 0;
-        width: 450px;
+        width: 520px;
         height: 100vh;
-        background: white;
-        box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
-        transition: right 0.3s ease;
+        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+        box-shadow: -8px 0 40px rgba(0, 0, 0, 0.2);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1050;
         display: flex;
         flex-direction: column;
+        border-left: 1px solid rgba(0,0,0,0.05);
     }
     
     .chat-preview-panel.active {
         right: 0;
     }
     
+    /* Chat Header - Modern Gradient */
     .chat-preview-header {
-        background: var(--asus-gradient);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
         color: white;
         padding: 20px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .chat-preview-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: pulse-slow 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-slow {
+        0%, 100% { transform: scale(1); opacity: 0.1; }
+        50% { transform: scale(1.2); opacity: 0.2; }
+    }
+    
+    .chat-preview-header .header-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        z-index: 1;
+    }
+    
+    .chat-preview-header .bot-avatar-header {
+        width: 44px;
+        height: 44px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
     }
     
     .chat-preview-header h5 {
         margin: 0;
         font-weight: 700;
+        font-size: 1.1rem;
+    }
+    
+    .chat-preview-header .header-subtitle {
+        font-size: 0.75rem;
+        opacity: 0.85;
+        margin-top: 2px;
     }
     
     .chat-preview-close {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
         color: white;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        z-index: 1;
     }
     
     .chat-preview-close:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.25);
+        transform: rotate(90deg);
     }
     
+    /* Chat Info Bar - Glassmorphism */
     .chat-preview-info {
-        padding: 16px 24px;
-        background: var(--asus-light);
+        padding: 16px 20px;
+        background: white;
         border-bottom: 1px solid #e2e8f0;
-    }
-    
-    .chat-preview-info .info-item {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 0.85rem;
+        flex-wrap: wrap;
+        gap: 12px;
     }
     
-    .chat-preview-info .info-label {
-        color: #64748b;
-    }
-    
-    .chat-preview-info .info-value {
-        color: var(--asus-dark);
+    .chat-preview-info .info-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 25px;
+        font-size: 0.8rem;
         font-weight: 600;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
     }
     
+    .chat-preview-info .info-chip:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .chat-preview-info .info-chip i {
+        font-size: 0.9rem;
+    }
+    
+    .chat-preview-info .info-chip.sentiment-positive {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        color: #059669;
+        border-color: #a7f3d0;
+    }
+    
+    .chat-preview-info .info-chip.sentiment-negative {
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        color: #dc2626;
+        border-color: #fecaca;
+    }
+    
+    .chat-preview-info .info-chip.sentiment-neutral {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        color: #64748b;
+        border-color: #cbd5e1;
+    }
+    
+    /* Chat Body - Message Container */
     .chat-preview-body {
         flex: 1;
         overflow-y: auto;
-        padding: 20px;
-        background: #f8fafc;
+        padding: 24px 20px;
+        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+        scroll-behavior: smooth;
     }
     
-    .chat-message {
-        margin-bottom: 16px;
+    .chat-preview-body::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .chat-preview-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .chat-preview-body::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+    
+    .chat-preview-body::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    
+    /* Date Separator */
+    .chat-date-separator {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 24px 0;
+    }
+    
+    .chat-date-separator span {
+        background: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        border: 1px solid #e2e8f0;
+    }
+    
+    /* Chat Message Container */
+    .chat-message {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+        animation: messageSlideIn 0.3s ease-out;
+    }
+    
+    @keyframes messageSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
     .chat-message.user {
-        align-items: flex-end;
+        flex-direction: row-reverse;
     }
     
     .chat-message.bot {
+        flex-direction: row;
+    }
+    
+    /* Message Avatar */
+    .message-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+        margin-top: 4px;
+    }
+    
+    .chat-message.bot .message-avatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .chat-message.user .message-avatar {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    /* Message Content Wrapper */
+    .message-content {
+        display: flex;
+        flex-direction: column;
+        max-width: 85%;
+    }
+    
+    .chat-message.user .message-content {
+        align-items: flex-end;
+    }
+    
+    .chat-message.bot .message-content {
         align-items: flex-start;
     }
     
+    /* Chat Bubble - Enhanced */
     .chat-bubble {
-        max-width: 85%;
-        padding: 12px 16px;
-        border-radius: 16px;
+        padding: 14px 18px;
+        border-radius: 20px;
         font-size: 0.9rem;
-        line-height: 1.5;
+        line-height: 1.6;
         position: relative;
+        word-wrap: break-word;
     }
     
     .chat-message.user .chat-bubble {
-        background: var(--asus-gradient);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        border-bottom-right-radius: 4px;
+        border-bottom-right-radius: 6px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
     }
     
     .chat-message.bot .chat-bubble {
         background: white;
-        color: var(--asus-dark);
+        color: #1e293b;
         border: 1px solid #e2e8f0;
-        border-bottom-left-radius: 4px;
+        border-bottom-left-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     }
     
+    /* Bot Message Content Formatting */
+    .chat-message.bot .chat-bubble h1,
+    .chat-message.bot .chat-bubble h2,
+    .chat-message.bot .chat-bubble h3,
+    .chat-message.bot .chat-bubble strong {
+        color: #1e293b;
+        font-weight: 700;
+    }
+    
+    .chat-message.bot .chat-bubble ul,
+    .chat-message.bot .chat-bubble ol {
+        margin: 8px 0;
+        padding-left: 20px;
+    }
+    
+    .chat-message.bot .chat-bubble li {
+        margin-bottom: 4px;
+    }
+    
+    /* Product Recommendation Cards in Bot Message */
+    .bot-product-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px;
+        margin: 10px 0;
+        display: flex;
+        gap: 12px;
+        transition: all 0.2s ease;
+    }
+    
+    .bot-product-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    }
+    
+    .bot-product-card .product-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+    
+    .bot-product-card .product-info {
+        flex: 1;
+    }
+    
+    .bot-product-card .product-name {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #1e293b;
+        margin-bottom: 2px;
+    }
+    
+    .bot-product-card .product-price {
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: #667eea;
+    }
+    
+    .bot-product-card .product-specs {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 4px;
+    }
+    
+    /* Table Styling in Bot Messages */
+    .chat-message.bot .chat-bubble table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 0.8rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .chat-message.bot .chat-bubble th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: 600;
+    }
+    
+    .chat-message.bot .chat-bubble td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .chat-message.bot .chat-bubble tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .chat-message.bot .chat-bubble tr:hover td {
+        background: #f1f5f9;
+    }
+    
+    /* Message Time */
     .chat-time {
         font-size: 0.7rem;
         color: #94a3b8;
-        margin-top: 4px;
+        margin-top: 6px;
         padding: 0 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
     }
     
+    .chat-message.user .chat-time {
+        justify-content: flex-end;
+    }
+    
+    .chat-time .read-status {
+        color: #667eea;
+    }
+    
+    /* Intent Badge */
+    .intent-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        color: #7c3aed;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-top: 6px;
+    }
+    
+    /* Typing Indicator */
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 18px;
+        background: white;
+        border-radius: 20px;
+        border-bottom-left-radius: 6px;
+        border: 1px solid #e2e8f0;
+    }
+    
+    .typing-indicator span {
+        width: 8px;
+        height: 8px;
+        background: #94a3b8;
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out;
+    }
+    
+    .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typingBounce {
+        0%, 60%, 100% { transform: translateY(0); background: #94a3b8; }
+        30% { transform: translateY(-4px); background: #667eea; }
+    }
+    
+    /* Chat Footer - Enhanced */
     .chat-preview-footer {
-        padding: 16px 24px;
+        padding: 20px 24px;
         background: white;
         border-top: 1px solid #e2e8f0;
         display: flex;
         gap: 12px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
     }
     
     .chat-preview-footer .btn {
         flex: 1;
-        padding: 12px;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    
+    .chat-preview-footer .btn-outline-warning {
+        border: 2px solid #f59e0b;
+        color: #f59e0b;
+        background: transparent;
+    }
+    
+    .chat-preview-footer .btn-outline-warning:hover {
+        background: #f59e0b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    
+    .chat-preview-footer .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+    }
+    
+    .chat-preview-footer .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .chat-preview-footer .btn-outline-secondary {
+        border: 2px solid #64748b;
+        color: #64748b;
+        background: transparent;
+    }
+    
+    .chat-preview-footer .btn-outline-secondary:hover {
+        background: #64748b;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+    }
+    
+    /* Response Time Badge */
+    .response-time-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
         border-radius: 10px;
+        font-size: 0.65rem;
         font-weight: 600;
+        margin-left: 8px;
+    }
+    
+    /* Empty State */
+    .chat-empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 40px;
+        text-align: center;
+    }
+    
+    .chat-empty-state i {
+        font-size: 4rem;
+        color: #e2e8f0;
+        margin-bottom: 16px;
+    }
+    
+    .chat-empty-state h6 {
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+    
+    .chat-empty-state p {
+        color: #94a3b8;
+        font-size: 0.85rem;
     }
     
     /* Activity Heatmap */
@@ -837,24 +1252,40 @@ while ($row = $hourly_result->fetch_assoc()) {
         </div>
     </div>
 
-    <!-- Chat Preview Panel -->
+    <!-- Chat Preview Panel - Enhanced Design -->
     <div class="panel-overlay" onclick="closeChatPreview()"></div>
     <div class="chat-preview-panel" id="chatPreviewPanel">
         <div class="chat-preview-header">
-            <h5><i class="bi bi-chat-dots me-2"></i>Conversation</h5>
+            <div class="header-content">
+                <div class="bot-avatar-header">
+                    <i class="bi bi-robot"></i>
+                </div>
+                <div>
+                    <h5>Conversation Preview</h5>
+                    <div class="header-subtitle" id="conversationSubtitle">Loading...</div>
+                </div>
+            </div>
             <button class="chat-preview-close" onclick="closeChatPreview()">
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>
         <div class="chat-preview-info" id="chatPreviewInfo">
-            <!-- Info loaded via AJAX -->
+            <!-- Info chips loaded via AJAX -->
         </div>
         <div class="chat-preview-body" id="chatPreviewBody">
             <!-- Messages loaded via AJAX -->
+            <div class="chat-empty-state">
+                <i class="bi bi-chat-square-dots"></i>
+                <h6>Select a Conversation</h6>
+                <p>Click on any conversation in the table to view the chat history</p>
+            </div>
         </div>
         <div class="chat-preview-footer">
             <button class="btn btn-outline-warning" onclick="flagCurrentConversation()">
                 <i class="bi bi-flag me-2"></i>Flag
+            </button>
+            <button class="btn btn-outline-secondary" onclick="analyzeConversation()">
+                <i class="bi bi-graph-up me-2"></i>Analyze
             </button>
             <button class="btn btn-primary" onclick="exportCurrentConversation()">
                 <i class="bi bi-download me-2"></i>Export
@@ -866,20 +1297,27 @@ while ($row = $hourly_result->fetch_assoc()) {
 
     <script>
     let currentConversationId = null;
+    let currentConversation = null;
     
     // View Conversation in Side Panel
     function viewConversation(conversationId) {
         currentConversationId = conversationId;
         
-        // Show panel
+        // Show panel with animation
         document.getElementById('chatPreviewPanel').classList.add('active');
         document.querySelector('.panel-overlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
         
-        // Show loading
+        // Show loading state
+        document.getElementById('conversationSubtitle').textContent = 'Loading...';
+        document.getElementById('chatPreviewInfo').innerHTML = `
+            <div class="info-chip"><i class="bi bi-hourglass-split"></i> Loading details...</div>
+        `;
         document.getElementById('chatPreviewBody').innerHTML = `
-            <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status"></div>
-                <p class="mt-3 text-muted">Loading conversation...</p>
+            <div class="chat-empty-state">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+                <h6>Loading Conversation</h6>
+                <p>Please wait while we fetch the chat history...</p>
             </div>
         `;
         
@@ -888,75 +1326,288 @@ while ($row = $hourly_result->fetch_assoc()) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    currentConversation = data.conversation;
                     displayConversation(data.conversation, data.messages);
                 } else {
-                    document.getElementById('chatPreviewBody').innerHTML = `
-                        <div class="alert alert-danger m-3">Error loading conversation</div>
-                    `;
+                    showError('Error loading conversation');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('chatPreviewBody').innerHTML = `
-                    <div class="alert alert-danger m-3">Failed to load conversation</div>
-                `;
+                showError('Failed to load conversation. Please try again.');
             });
     }
     
-    function displayConversation(conversation, messages) {
-        const sentimentColors = {
-            'positive': '#10b981',
-            'neutral': '#64748b',
-            'negative': '#ef4444'
-        };
-        
-        // Info section
-        document.getElementById('chatPreviewInfo').innerHTML = `
-            <div class="info-item">
-                <span class="info-label">Session ID</span>
-                <span class="info-value">${conversation.session_id.substring(0, 16)}...</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">User</span>
-                <span class="info-value">${conversation.user_name}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Duration</span>
-                <span class="info-value">${conversation.duration_formatted || conversation.duration_seconds + 's'}</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Sentiment</span>
-                <span class="info-value" style="color: ${sentimentColors[conversation.sentiment] || '#64748b'}">
-                    ${(conversation.sentiment || 'neutral').charAt(0).toUpperCase() + (conversation.sentiment || 'neutral').slice(1)}
-                </span>
+    function showError(message) {
+        document.getElementById('chatPreviewBody').innerHTML = `
+            <div class="chat-empty-state">
+                <i class="bi bi-exclamation-triangle text-warning"></i>
+                <h6>Something went wrong</h6>
+                <p>${message}</p>
+                <button class="btn btn-sm btn-primary mt-2" onclick="viewConversation(${currentConversationId})">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Retry
+                </button>
             </div>
         `;
+    }
+    
+    function displayConversation(conversation, messages) {
+        // Update header subtitle
+        const formattedDate = conversation.started_formatted || conversation.started_at || 'Unknown date';
+        document.getElementById('conversationSubtitle').textContent = 
+            `${conversation.user_name} • ${formattedDate}`;
         
-        // Messages
+        // Build info chips
+        const sentimentEmoji = {
+            'positive': '😊',
+            'neutral': '😐', 
+            'negative': '😞'
+        };
+        const sentiment = conversation.sentiment || 'neutral';
+        const duration = formatDuration(conversation.duration_seconds);
+        
+        document.getElementById('chatPreviewInfo').innerHTML = `
+            <div class="info-chip">
+                <i class="bi bi-person"></i> ${escapeHtml(conversation.user_name)}
+            </div>
+            <div class="info-chip">
+                <i class="bi bi-clock"></i> ${duration}
+            </div>
+            <div class="info-chip">
+                <i class="bi bi-chat-dots"></i> ${conversation.message_count || messages.length} messages
+            </div>
+            <div class="info-chip sentiment-${sentiment}">
+                ${sentimentEmoji[sentiment]} ${sentiment.charAt(0).toUpperCase() + sentiment.slice(1)}
+            </div>
+            ${conversation.outcome ? `<div class="info-chip"><i class="bi bi-bullseye"></i> ${escapeHtml(conversation.outcome)}</div>` : ''}
+        `;
+        
+        // Build messages with enhanced formatting
         let messagesHtml = '';
-        messages.forEach(msg => {
+        let lastDateStr = null;
+        
+        messages.forEach((msg, index) => {
+            // Extract date from timestamp (format: "Nov 24, 2025 at 3:45 PM")
+            const timestampParts = (msg.timestamp || '').split(' at ');
+            const dateStr = timestampParts[0] || '';
+            
+            // Add date separator if new day
+            if (dateStr && lastDateStr !== dateStr) {
+                messagesHtml += `
+                    <div class="chat-date-separator">
+                        <span>${dateStr}</span>
+                    </div>
+                `;
+                lastDateStr = dateStr;
+            }
+            
             const isUser = msg.message_type === 'user';
+            const avatarIcon = isUser ? 'bi-person' : 'bi-robot';
+            const timeStr = msg.time_only || timestampParts[1] || '';
+            const formattedContent = isUser ? escapeHtml(msg.message_content) : formatBotMessage(msg.message_content);
+            
+            // Calculate response time for bot messages
+            let responseTimeBadge = '';
+            if (!isUser && msg.response_time_display) {
+                responseTimeBadge = `<span class="response-time-badge"><i class="bi bi-lightning"></i> ${msg.response_time_display}</span>`;
+            }
+            
+            // Intent badge for bot messages
+            let intentBadge = '';
+            if (!isUser && msg.intent_detected) {
+                intentBadge = `<div class="intent-badge"><i class="bi bi-cpu"></i> ${escapeHtml(msg.intent_detected)}</div>`;
+            }
+            
             messagesHtml += `
-                <div class="chat-message ${isUser ? 'user' : 'bot'}">
-                    <div class="chat-bubble">${escapeHtml(msg.message_content)}</div>
-                    <div class="chat-time">${msg.time_only || msg.timestamp}</div>
+                <div class="chat-message ${isUser ? 'user' : 'bot'}" style="animation-delay: ${index * 0.05}s">
+                    <div class="message-avatar">
+                        <i class="bi ${avatarIcon}"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="chat-bubble">${formattedContent}</div>
+                        <div class="chat-time">
+                            ${timeStr}
+                            ${isUser ? '<i class="bi bi-check2-all read-status"></i>' : ''}
+                            ${responseTimeBadge}
+                        </div>
+                        ${intentBadge}
+                    </div>
                 </div>
             `;
         });
         
-        document.getElementById('chatPreviewBody').innerHTML = messagesHtml;
+        document.getElementById('chatPreviewBody').innerHTML = messagesHtml || `
+            <div class="chat-empty-state">
+                <i class="bi bi-chat-square"></i>
+                <h6>No Messages</h6>
+                <p>This conversation has no messages to display</p>
+            </div>
+        `;
         
-        // Scroll to bottom
+        // Smooth scroll to top (to show from beginning)
         setTimeout(() => {
             const body = document.getElementById('chatPreviewBody');
-            body.scrollTop = body.scrollHeight;
+            body.scrollTop = 0;
         }, 100);
+    }
+    
+    // Format bot messages with enhanced styling
+    function formatBotMessage(content) {
+        if (!content) return '';
+        
+        // First decode HTML entities that might have been double-encoded
+        let formatted = content
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'");
+        
+        // Check if content has markdown tables
+        if (formatted.includes('|') && formatted.includes('---')) {
+            formatted = formatMarkdownTable(formatted);
+        } else {
+            // Escape HTML for non-table content
+            formatted = escapeHtml(formatted);
+        }
+        
+        // Convert **bold** to <strong>
+        formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-primary">$1</strong>');
+        
+        // Convert markdown-style headers
+        formatted = formatted.replace(/^### (.+)$/gm, '<h6 class="mt-3 mb-2 fw-bold">$1</h6>');
+        formatted = formatted.replace(/^## (.+)$/gm, '<h5 class="mt-3 mb-2 fw-bold">$1</h5>');
+        
+        // Convert bullet points (• - *)
+        formatted = formatted.replace(/^[•●] (.+)$/gm, '<li style="margin-left: 16px;">$1</li>');
+        formatted = formatted.replace(/^- (.+)$/gm, '<li style="margin-left: 16px;">$1</li>');
+        
+        // Convert numbered lists
+        formatted = formatted.replace(/^\d+\.\s+(.+)$/gm, '<li style="margin-left: 16px;">$1</li>');
+        
+        // Convert line breaks
+        formatted = formatted.replace(/\n\n/g, '</p><p class="mb-2">');
+        formatted = formatted.replace(/\n/g, '<br>');
+        
+        // Handle <br> tags in content
+        formatted = formatted.replace(/&lt;br&gt;/gi, '<br>');
+        formatted = formatted.replace(/<br>/gi, '<br>');
+        
+        // Wrap in paragraph if needed
+        if (!formatted.startsWith('<')) {
+            formatted = `<p class="mb-0">${formatted}</p>`;
+        }
+        
+        return formatted;
+    }
+    
+    // Format markdown tables into HTML
+    function formatMarkdownTable(content) {
+        const lines = content.split('\n');
+        let result = [];
+        let inTable = false;
+        let tableHtml = '';
+        let headers = [];
+        
+        lines.forEach((line, index) => {
+            const trimmed = line.trim();
+            
+            // Check if this is a table row
+            if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+                // Skip separator row (|---|---|)
+                if (trimmed.match(/^\|[\s\-:|]+\|$/)) {
+                    return;
+                }
+                
+                const cells = trimmed.split('|').filter(c => c.trim() !== '');
+                
+                if (!inTable) {
+                    // Start table - this is the header row
+                    inTable = true;
+                    headers = cells.map(c => c.trim());
+                    tableHtml = '<div class="table-responsive mt-2 mb-2"><table class="table table-sm table-bordered mb-0" style="font-size: 0.8rem;"><thead class="table-primary"><tr>';
+                    headers.forEach(h => {
+                        tableHtml += `<th class="py-2 px-2">${escapeHtml(h)}</th>`;
+                    });
+                    tableHtml += '</tr></thead><tbody>';
+                } else {
+                    // Data row
+                    tableHtml += '<tr>';
+                    cells.forEach((c, i) => {
+                        let cellContent = c.trim();
+                        // Format bold text in cells
+                        cellContent = cellContent.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                        tableHtml += `<td class="py-2 px-2">${cellContent}</td>`;
+                    });
+                    tableHtml += '</tr>';
+                }
+            } else {
+                // Not a table row
+                if (inTable) {
+                    // Close the table
+                    tableHtml += '</tbody></table></div>';
+                    result.push(tableHtml);
+                    tableHtml = '';
+                    inTable = false;
+                }
+                result.push(escapeHtml(trimmed));
+            }
+        });
+        
+        // Close any open table
+        if (inTable) {
+            tableHtml += '</tbody></table></div>';
+            result.push(tableHtml);
+        }
+        
+        return result.join('\n');
+    }
+    
+    
+    // Helper: Format date for display
+    function formatDate(date) {
+        const options = { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return date.toLocaleDateString('en-US', options);
+    }
+    
+    // Helper: Format date label
+    function formatDateLabel(date) {
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        if (date.toDateString() === today.toDateString()) {
+            return 'Today';
+        } else if (date.toDateString() === yesterday.toDateString()) {
+            return 'Yesterday';
+        } else {
+            return date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+        }
+    }
+    
+    // Helper: Format time
+    function formatTime(date) {
+        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+    
+    // Helper: Format duration
+    function formatDuration(seconds) {
+        if (!seconds || seconds < 0) return '0s';
+        if (seconds < 60) return `${seconds}s`;
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        if (minutes < 60) return `${minutes}m ${secs}s`;
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}m`;
     }
     
     function closeChatPreview() {
         document.getElementById('chatPreviewPanel').classList.remove('active');
         document.querySelector('.panel-overlay').classList.remove('active');
+        document.body.style.overflow = '';
         currentConversationId = null;
+        currentConversation = null;
     }
     
     function flagConversation(id) {
@@ -969,13 +1620,38 @@ while ($row = $hourly_result->fetch_assoc()) {
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.success ? 'Conversation flagged!' : 'Error: ' + data.message);
+                if (data.success) {
+                    showToast('success', 'Conversation flagged successfully!');
+                } else {
+                    showToast('error', 'Error: ' + data.message);
+                }
             });
         }
     }
     
     function flagCurrentConversation() {
         if (currentConversationId) flagConversation(currentConversationId);
+    }
+    
+    function analyzeConversation() {
+        if (!currentConversation) {
+            showToast('warning', 'Please select a conversation first');
+            return;
+        }
+        
+        // Show analysis modal or panel
+        const analysis = {
+            sentiment: currentConversation.sentiment || 'neutral',
+            messages: currentConversation.message_count || 0,
+            duration: formatDuration(currentConversation.duration_seconds),
+            outcome: currentConversation.outcome || 'Unknown'
+        };
+        
+        alert(`📊 Conversation Analysis\n\n` +
+              `Sentiment: ${analysis.sentiment.charAt(0).toUpperCase() + analysis.sentiment.slice(1)}\n` +
+              `Messages: ${analysis.messages}\n` +
+              `Duration: ${analysis.duration}\n` +
+              `Outcome: ${analysis.outcome}`);
     }
     
     function exportLogs() {
@@ -988,22 +1664,51 @@ while ($row = $hourly_result->fetch_assoc()) {
     }
     
     function exportCurrentConversation() {
-        if (currentConversationId) exportSingle(currentConversationId);
+        if (currentConversationId) {
+            exportSingle(currentConversationId);
+        } else {
+            showToast('warning', 'Please select a conversation first');
+        }
     }
     
     function escapeHtml(text) {
+        if (!text) return '';
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
     
-    // Close panel on ESC
+    // Toast notification helper
+    function showToast(type, message) {
+        // Use existing toast system if available, otherwise use alert
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: type,
+                title: message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        } else {
+            alert(message);
+        }
+    }
+    
+    // Close panel on ESC key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeChatPreview();
     });
+    
+    // Add hover effect to table rows
+    document.querySelectorAll('.conversation-table tbody tr').forEach(row => {
+        row.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.005)';
+        });
+        row.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
     </script>
-</body>
-</html>
-
 </body>
 </html>
